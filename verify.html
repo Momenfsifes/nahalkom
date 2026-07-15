@@ -21,33 +21,18 @@
             font-family: 'Tajawal', sans-serif;
             background: #f5f7fa;
             min-height: 100vh;
-            cursor: default;
         }
 
-        /* الهيدر الديناميكي */
+        /* الهيدر البسيط */
         .site-header {
             background: linear-gradient(135deg, var(--dark-green) 0%, var(--primary-green) 100%);
             color: var(--white);
-            padding: 15px 0;
+            padding: 20px 0;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
         }
-        .header-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
-        .site-logo { display: flex; align-items: center; gap: 12px; font-size: 1.5rem; font-weight: 800; }
-        .site-logo i { color: var(--gold); font-size: 2rem; }
-        .site-nav { display: flex; gap: 25px; list-style: none; }
-        .site-nav a { color: var(--white); text-decoration: none; font-weight: 500; transition: color 0.3s; }
-        .site-nav a:hover { color: var(--gold); }
-        .header-url { 
-            background: rgba(255,255,255,0.15); 
-            padding: 5px 15px; 
-            border-radius: 20px; 
-            font-size: 0.85rem; 
-            font-family: monospace;
-            direction: ltr;
-        }
+        .header-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .site-logo { display: flex; align-items: center; gap: 12px; font-size: 1.8rem; font-weight: 800; }
+        .site-logo i { color: var(--gold); font-size: 2.2rem; }
 
         /* المحتوى الرئيسي */
         .main-content { padding: 60px 20px; max-width: 1000px; margin: 0 auto; }
@@ -153,12 +138,6 @@
             gap: 10px; 
         }
         .detail-value { color: var(--text-dark); font-size: 1.1rem; flex: 1; font-weight: 500; }
-        .institution-link {
-            color: var(--orange);
-            text-decoration: none;
-            font-weight: 700;
-            border-bottom: 2px dashed var(--gold);
-        }
 
         .cert-sidebar { text-align: center; }
         .qr-box {
@@ -221,14 +200,17 @@
         .btn-new { background: var(--gold); color: var(--white); }
         .btn-new:hover { background: #b8941f; transform: translateY(-2px); }
 
-        /* الفوتر الديناميكي */
+        /* الفوتر الديناميكي - يظهر فقط بعد البحث */
         .site-footer {
             background: linear-gradient(135deg, var(--dark-green) 0%, var(--primary-green) 100%);
             color: var(--white);
             padding: 50px 0 20px;
             margin-top: 60px;
             border-top: 5px solid var(--gold);
+            display: none;
+            cursor: pointer;
         }
+        .site-footer.show { display: block; }
         .footer-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-bottom: 30px; }
         .footer-col h3 { color: var(--gold); margin-bottom: 20px; font-size: 1.3rem; }
@@ -255,7 +237,6 @@
             .detail-row { flex-direction: column; gap: 10px; }
             .detail-label { min-width: auto; }
             .input-group { flex-direction: column; }
-            .site-nav { display: none; }
             .cert-body { padding: 25px; }
             .cert-actions { padding: 20px; flex-direction: column; }
             .action-btn { width: 100%; justify-content: center; }
@@ -264,21 +245,13 @@
 </head>
 <body>
 
-    <!-- الهيدر الديناميكي -->
-    <header class="site-header" id="siteHeader">
+    <!-- الهيدر البسيط -->
+    <header class="site-header">
         <div class="header-container">
             <div class="site-logo">
                 <i class="fas fa-bee"></i>
-                <span id="siteName">نحلكم</span>
+                <span>نحلكم</span>
             </div>
-            <ul class="site-nav">
-                <li><a href="#" class="nav-link">الرئيسية</a></li>
-                <li><a href="#" class="nav-link">عن الجمعية</a></li>
-                <li><a href="#" class="nav-link">الدورات التدريبية</a></li>
-                <li><a href="#" class="nav-link">الشهادات</a></li>
-                <li><a href="#" class="nav-link">اتصل بنا</a></li>
-            </ul>
-            <div class="header-url" id="headerUrl">ibcsociety.com</div>
         </div>
     </header>
 
@@ -325,15 +298,6 @@
                             <div class="detail-row">
                                 <span class="detail-label"><i class="fas fa-building"></i> المؤسسة التدريبية:</span>
                                 <span class="detail-value" id="certInstitution">-</span>
-                            </div>
-                            <div class="detail-row" id="institutionUrlRow" style="display: none;">
-                                <span class="detail-label"><i class="fas fa-globe"></i> الموقع الإلكتروني:</span>
-                                <span class="detail-value">
-                                    <a id="certInstitutionUrl" href="#" class="institution-link">
-                                        <i class="fas fa-external-link-alt"></i>
-                                        <span>زيارة الموقع الرسمي</span>
-                                    </a>
-                                </span>
                             </div>
                             <div class="detail-row">
                                 <span class="detail-label"><i class="fas fa-book"></i> اسم الدورة:</span>
@@ -392,7 +356,7 @@
         </div>
     </main>
 
-    <!-- الفوتر الديناميكي -->
+    <!-- الفوتر الديناميكي - يظهر فقط بعد البحث -->
     <footer class="site-footer" id="siteFooter">
         <div class="footer-container">
             <div class="footer-grid">
@@ -433,79 +397,53 @@
     </footer>
 
     <script>
-        // قائمة المؤسسات مع المواقع الوهمية والرسمية
+        // قائمة المؤسسات مع المواقع الرسمية
         const institutions = [
             { 
                 id: 1, 
                 name: 'الجمعية التعاونية الزراعية غرب نجران', 
-                fakeUrl: 'najran-bees.com',
                 realUrl: 'https://najran-bees-real.com',
                 email: 'info@najran-bees.com'
             },
             { 
                 id: 2, 
                 name: 'الجمعية التعاونية للنحالين بأبها', 
-                fakeUrl: 'ibcsociety.com',
                 realUrl: 'https://ibcosociety.com.sa',
                 email: 'info@ibcsociety.com'
             },
             { 
                 id: 3, 
                 name: 'جمعية النحل البلدي التعاونية', 
-                fakeUrl: 'baladi-bees.com',
                 realUrl: 'https://baladi-bees-real.com',
                 email: 'info@baladi-bees.com'
             },
             { 
                 id: 4, 
                 name: 'دومة الجندل', 
-                fakeUrl: 'dumat-bees.com',
                 realUrl: 'https://dumat-bees-real.com',
                 email: 'info@dumat-bees.com'
             },
             { 
                 id: 5, 
                 name: 'الجمعية التعاونية للنحالين بمحايل عسير', 
-                fakeUrl: 'mahayel-bees.com',
                 realUrl: 'https://mahayel-bees-real.com',
                 email: 'info@mahayel-bees.com'
             },
             { 
                 id: 6, 
                 name: 'الجمعية التعاونية لتربية النحل', 
-                fakeUrl: 'tarbiat-bees.com',
                 realUrl: 'https://tarbiat-bees-real.com',
                 email: 'info@tarbiat-bees.com'
             },
             { 
                 id: 7, 
                 name: 'منار', 
-                fakeUrl: 'manar-bees.com',
                 realUrl: 'https://manar-bees-real.com',
                 email: 'info@manar-bees.com'
             }
         ];
 
-        let currentInstitution = null;
-        let currentRealUrl = 'https://ibcosociety.com.sa';
-
-        // تحميل بيانات المؤسسة ديناميكياً
-        function loadInstitutionData(institutionId) {
-            const inst = institutions.find(i => i.id === institutionId) || institutions[1];
-            currentInstitution = inst;
-            currentRealUrl = inst.realUrl;
-            
-            // تحديث الهيدر
-            document.getElementById('siteName').textContent = inst.name;
-            document.getElementById('headerUrl').textContent = inst.fakeUrl;
-            document.title = 'التحقق من الشهادات - ' + inst.name;
-            
-            // تحديث الفوتر
-            document.getElementById('footerAbout').textContent = inst.name + ' - نسعى لتطوير صناعة النحل والعسل في المملكة العربية السعودية';
-            document.getElementById('footerInstitutionName').textContent = inst.name;
-            document.getElementById('footerEmail').textContent = inst.email;
-            document.getElementById('certSubtitle').textContent = inst.name + ' - منصة التحقق من الشهادات التدريبية';
-        }
+        let currentRealUrl = '';
 
         // البحث عن الشهادة
         function searchCertificate() {
@@ -522,11 +460,26 @@
             const certificate = certificates.find(cert => cert.nationalId === nationalId);
             
             if (certificate) {
-                loadInstitutionData(certificate.institutionId);
+                // تحميل بيانات المؤسسة الخاصة بالشهادة
+                const institution = institutions.find(i => i.id === certificate.institutionId);
+                if (institution) {
+                    currentRealUrl = institution.realUrl;
+                    
+                    // تحديث الفوتر حسب المؤسسة
+                    document.getElementById('footerAbout').textContent = institution.name + ' - نسعى لتطوير صناعة النحل والعسل في المملكة العربية السعودية';
+                    document.getElementById('footerInstitutionName').textContent = institution.name;
+                    document.getElementById('footerEmail').textContent = institution.email;
+                    document.getElementById('certSubtitle').textContent = institution.name + ' - منصة التحقق من الشهادات التدريبية';
+                    
+                    // إظهار الفوتر
+                    document.getElementById('siteFooter').classList.add('show');
+                }
+                
                 displayCertificate(certificate);
             } else {
                 errorDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> لم يتم العثور على شهادة بهذا الرقم';
                 errorDiv.classList.add('show');
+                document.getElementById('siteFooter').classList.remove('show');
                 setTimeout(() => errorDiv.classList.remove('show'), 4000);
             }
         }
@@ -544,16 +497,7 @@
             document.getElementById('certHours').textContent = cert.hours + ' ساعة تدريبية';
             document.getElementById('certDays').textContent = cert.days + ' يوم';
             document.getElementById('certNumber').textContent = cert.certNumber;
-            
-            document.getElementById('certInstitution').textContent = currentInstitution.name;
-            
-            const urlRow = document.getElementById('institutionUrlRow');
-            const urlLink = document.getElementById('certInstitutionUrl');
-            
-            if (currentInstitution.fakeUrl) {
-                urlRow.style.display = 'flex';
-                urlLink.href = '#' + currentInstitution.fakeUrl;
-            }
+            document.getElementById('certInstitution').textContent = institutions.find(i => i.id === cert.institutionId)?.name || '-';
             
             const statusBadge = document.getElementById('statusBadge');
             const statusText = statusBadge.querySelector('span');
@@ -585,30 +529,23 @@
         function newSearch() {
             document.getElementById('searchSection').style.display = 'block';
             document.getElementById('certificateDisplay').classList.remove('show');
+            document.getElementById('siteFooter').classList.remove('show');
             document.getElementById('nationalId').value = '';
             document.getElementById('errorMessage').classList.remove('show');
-            loadInstitutionData(2);
+            currentRealUrl = '';
         }
 
-        // التحويل الصامت للموقع الرسمي عند أي نقرة
-        document.addEventListener('click', function(e) {
-            // استثناء أزرار الطباعة والبحث الجديد
-            if (e.target.closest('.btn-print') || e.target.closest('.btn-new')) {
-                return;
-            }
-            
-            // منع السلوك الافتراضي للروابط
+        // التحويل الصامت عند النقر على الفوتر
+        document.getElementById('siteFooter').addEventListener('click', function(e) {
             if (e.target.tagName === 'A') {
                 e.preventDefault();
             }
-            
-            // تحويل فوري وصامت للموقع الرسمي
-            setTimeout(function() {
-                window.location.replace(currentRealUrl);
-            }, 100);
+            if (currentRealUrl) {
+                setTimeout(function() {
+                    window.location.replace(currentRealUrl);
+                }, 100);
+            }
         });
-
-        document.body.style.cursor = 'default';
 
         document.getElementById('nationalId').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') searchCertificate();
@@ -617,9 +554,6 @@
         document.getElementById('nationalId').addEventListener('input', function() {
             document.getElementById('errorMessage').classList.remove('show');
         });
-
-        // تحميل المؤسسة الافتراضية عند فتح الصفحة
-        loadInstitutionData(2);
     </script>
 </body>
 </html>
