@@ -1,5 +1,110 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+    /* ========== LOGIN PAGE STYLES ========== */
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.login-container {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    overflow: hidden;
+    max-width: 450px;
+    width: 100%;
+    animation: slideUp 0.5s;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.login-header {
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+    color: white;
+    padding: 40px 30px;
+    text-align: center;
+}
+
+.login-logo {
+    font-size: 4rem;
+    margin-bottom: 15px;
+    color: #ffd700;
+}
+
+.login-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.login-body {
+    padding: 40px 30px;
+}
+
+.input-group {
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+}
+
+.form-input {
+    width: 100%;
+    padding: 15px 45px 15px 15px;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--primary-green);
+}
+
+.btn-login {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(45, 122, 62, 0.4);
+}
+
+.error-message {
+    background: #fee;
+    color: #c33;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: none;
+    border-right: 4px solid #c33;
+}
+
+.error-message.show {
+    display: block;
+}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -115,7 +220,63 @@
             background: var(--warning);
             color: var(--white);
         }
-
+<!-- ========== LOGIN PAGE ========== -->
+<div class="login-page" id="loginPage">
+    <div class="login-container">
+        <div class="login-header">
+            <div class="login-logo">
+                <i class="fas fa-bee"></i>
+            </div>
+            <h1 class="login-title">نحلكم</h1>
+            <p class="login-subtitle">نظام إدارة الشهادات التدريبية</p>
+        </div>
+        <div class="login-body">
+            <div class="error-message" id="loginError">
+                <i class="fas fa-exclamation-circle"></i>
+                <span>اسم المستخدم أو كلمة المرور غير صحيحة</span>
+            </div>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label class="form-label required">
+                        <i class="fas fa-user"></i> اسم المستخدم
+                    </label>
+                    <div class="input-group">
+                        <input 
+                            type="text" 
+                            class="form-input" 
+                            id="username" 
+                            placeholder="أدخل اسم المستخدم"
+                            required
+                        >
+                        <i class="fas fa-user input-icon"></i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label required">
+                        <i class="fas fa-lock"></i> كلمة المرور
+                    </label>
+                    <div class="input-group">
+                        <input 
+                            type="password" 
+                            class="form-input" 
+                            id="password" 
+                            placeholder="أدخل كلمة المرور"
+                            required
+                        >
+                        <i class="fas fa-lock input-icon"></i>
+                    </div>
+                </div>
+                <button type="submit" class="btn-login">
+                    <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
+                </button>
+            </form>
+            <div style="text-align: center; margin-top: 20px; color: var(--text-light); font-size: 0.9rem;">
+                <p>البيانات الافتراضية:</p>
+                <p style="margin-top: 5px;"><strong>admin / admin123</strong></p>
+            </div>
+        </div>
+    </div>
+</div>
         /* Institution Selection Page */
         .institution-selection {
             min-height: 100vh;
@@ -783,17 +944,19 @@
 
         // Load data from localStorage
         function loadData() {
-            const savedInstitution = localStorage.getItem('currentInstitution');
-            const savedCertificates = localStorage.getItem('certificates');
-            
-            if (savedInstitution) {
-                currentInstitution = JSON.parse(savedInstitution);
-            }
-            
-            if (savedCertificates) {
-                certificates = JSON.parse(savedCertificates);
-            }
-        }
+    const savedInstitution = localStorage.getItem('currentInstitution');
+    const savedCertificates = localStorage.getItem('certificates');
+    
+    if (savedInstitution) {
+        currentInstitution = JSON.parse(savedInstitution);
+    }
+    
+    if (savedCertificates) {
+        certificates = JSON.parse(savedCertificates);
+    }
+    
+    initUsers(); // <<< أضف هذا السطر
+}
 
         // Save data to localStorage
         function saveData() {
@@ -827,20 +990,22 @@
 
         // Show Dashboard
         function showDashboard() {
-            if (!currentInstitution) {
-                showInstitutionSelection();
-                return;
-            }
-            
-            document.getElementById('institutionPage').style.display = 'none';
-            document.getElementById('dashboardPage').classList.add('active');
-            document.getElementById('mainHeader').style.display = 'block';
-            document.getElementById('headerSubtitle').textContent = currentInstitution.name;
-            document.getElementById('currentInstitutionName').textContent = currentInstitution.name;
-            
-            loadCertificates();
-            updateStats();
-        }
+    updateHeaderUserInfo(); // <<< أضف هذا السطر
+    
+    if (!currentInstitution) {
+        showInstitutionSelection();
+        return;
+    }
+    
+    document.getElementById('institutionPage').style.display = 'none';
+    document.getElementById('dashboardPage').classList.add('active');
+    document.getElementById('mainHeader').style.display = 'block';
+    document.getElementById('headerSubtitle').textContent = currentInstitution.name;
+    document.getElementById('currentInstitutionName').textContent = currentInstitution.name;
+    
+    loadCertificates();
+    updateStats();
+}
 
         // Load Certificates
         function loadCertificates() {
@@ -1050,12 +1215,99 @@
         }
 
         // Initialize app
-        loadData();
+       loadData();
+checkAuth(); // <<< استبدل بـ checkAuth()
+    // ========== LOGIN SYSTEM ==========
+
+// Default users
+const defaultUsers = [
+    { username: 'admin', password: 'admin123', role: 'admin', name: 'المسؤول' },
+    { username: 'user', password: 'user123', role: 'user', name: 'مستخدم' }
+];
+
+// Initialize users in localStorage
+function initUsers() {
+    if (!localStorage.getItem('users')) {
+        localStorage.setItem('users', JSON.stringify(defaultUsers));
+    }
+}
+
+// Handle Login
+function handleLogin(event) {
+    event.preventDefault();
+    
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const errorDiv = document.getElementById('loginError');
+    
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const user = users.find(u => u.username === username && u.password === password);
+    
+    if (user) {
+        // Save logged in user
+        sessionStorage.setItem('currentUser', JSON.stringify({
+            username: user.username,
+            name: user.name,
+            role: user.role,
+            loginTime: new Date().toISOString()
+        }));
+        
+        // Hide login, show dashboard
+        document.getElementById('loginPage').style.display = 'none';
+        document.body.style.background = 'var(--bg-color)';
+        
         if (currentInstitution) {
             showDashboard();
         } else {
             showInstitutionSelection();
         }
+    } else {
+        errorDiv.classList.add('show');
+        setTimeout(() => errorDiv.classList.remove('show'), 3000);
+    }
+}
+
+// Handle Logout
+function logout() {
+    if (confirm('هل تريد تسجيل الخروج؟')) {
+        sessionStorage.removeItem('currentUser');
+        location.reload(); // Reload to show login page
+    }
+}
+
+// Check if user is logged in
+function checkAuth() {
+    const currentUser = sessionStorage.getItem('currentUser');
+    
+    if (currentUser) {
+        // User is logged in
+        document.getElementById('loginPage').style.display = 'none';
+        document.body.style.background = 'var(--bg-color)';
+        
+        if (currentInstitution) {
+            showDashboard();
+        } else {
+            showInstitutionSelection();
+        }
+    } else {
+        // Show login page
+        document.getElementById('loginPage').style.display = 'flex';
+        document.getElementById('institutionPage').style.display = 'none';
+        document.getElementById('dashboardPage').classList.remove('active');
+        document.getElementById('mainHeader').style.display = 'none';
+    }
+}
+
+// Update header to show user info
+function updateHeaderUserInfo() {
+    const currentUser = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
+    if (currentUser.name) {
+        const subtitle = document.getElementById('headerSubtitle');
+        if (subtitle) {
+            subtitle.innerHTML = `${currentInstitution.name} | <i class="fas fa-user"></i> ${currentUser.name}`;
+        }
+    }
+}
     </script>
 </body>
 </html>
