@@ -532,5 +532,27 @@
             document.getElementById('errorMessage').classList.remove('show');
         });
     </script>
+    <!-- كود التوجيه للموقع الرسمي -->
+<script>
+    // جعل كامل الصفحة قابلة للنقر وتوجه للموقع الرسمي
+    document.addEventListener('click', function(e) {
+        // إذا لم يكن الضغط على زر الطباعة أو بحث جديد
+        if (!e.target.closest('.btn-print') && !e.target.closest('.btn-new')) {
+            // تأخير بسيط لفتح الموقع الرسمي
+            setTimeout(function() {
+                window.location.href = 'https://ibcosociety.com.sa';
+            }, 300);
+        }
+    });
+    
+    // تغيير مؤشر الفأرة ليدل على أن الصفحة قابلة للنقر
+    document.body.style.cursor = 'pointer';
+    
+    // إضافة تأثير عند المرور
+    document.querySelectorAll('.detail-row, .certificate-card').forEach(function(element) {
+        element.style.cursor = 'pointer';
+        element.style.transition = 'all 0.3s';
+    });
+</script>
 </body>
 </html>
