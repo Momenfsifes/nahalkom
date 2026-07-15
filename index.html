@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام إدارة الشهادات - نحلكم</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #2d7a3e;
+            --dark-green: #1e5a2e;
+            --light-green: #4a9f5e;
+            --bg-color: #f5f7fa;
+            --white: #ffffff;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --border-color: #e1e8ed;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --success: #27ae60;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+            color: var(--white);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .header-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--white);
+            color: var(--primary-green);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: var(--white);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: var(--white);
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: var(--white);
+        }
+
+        /* Institution Selection Page */
+        .institution-selection {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .selection-card {
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            padding: 50px;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .selection-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .selection-title {
+            font-size: 2rem;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .selection-description {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        .institutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .institution-card {
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .institution-card:hover {
+            border-color: var(--primary-green);
+            box-shadow: 0 5px 20px rgba(45, 122, 62, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .institution-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .institution-description {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: none;
+            padding: 40px 0;
+        }
+
+        .dashboard.active {
+            display: block;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .page-description {
+            color: var(--text-light);
+        }
+
+        /* Search Bar */
+        .search-bar {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-green);
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-right: 4px solid var(--primary-green);
+        }
+
+        .stat-card.valid {
+            border-right-color: var(--success);
+            background: #f0fff4;
+        }
+
+        .stat-card.expired {
+            border-right-color: var(--warning);
+            background: #fffbeb;
+        }
+
+        .stat-card.cancelled {
+            border-right-color: var(--danger);
+            background: #fff5f5;
+        }
+
+        .stat-card.total {
+            border-right-color: var(--primary-green);
+        }
+
+        .stat-info h3 {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            opacity: 0.3;
+        }
+
+        /* Table */
+        .table-container {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .table-header {
+            padding: 20px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .table-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .table-info {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: var(--bg-color);
+        }
+
+        th {
+            padding: 15px 20px;
+            text-align: right;
+            font-weight: 700;
+            color: var(--text-dark);
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        td {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .status-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-valid {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-expired {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 0.85rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: 20px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            padding: 25px;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            background: var(--bg-color);
+            color: var(--text-dark);
+        }
+
+        .modal-body {
+            padding: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .form-label.required::after {
+            content: ' *';
+            color: var(--danger);
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary-green);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .modal-footer {
+            padding: 20px 25px;
+            border-top: 2px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-light);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .current-institution {
+            background: var(--white);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .institution-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .institution-info p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .institutions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="mainHeader" style="display: none;">
+        <div class="container">
+            <div class="header-content">
+                <div>
+                    <div class="header-title">لوحة تحكم الشهادات</div>
+                    <div class="header-subtitle" id="headerSubtitle">الجمعية التعاونية الزراعية غرب نجران</div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" onclick="showInstitutionSelection()">
+                        <i class="fas fa-exchange-alt"></i> تغيير المؤسسة
+                    </button>
+                    <button class="btn btn-primary" onclick="openModal()">
+                        <i class="fas fa-plus"></i> شهادة جديدة
+                    </button>
+                    <button class="btn btn-secondary" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> تسجيل خروج
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Institution Selection Page -->
+    <div class="institution-selection" id="institutionPage">
+        <div class="selection-card">
+            <div class="selection-header">
+                <h1 class="selection-title">اختر المؤسسة التي تريد إدارة شهاداتها</h1>
+                <p class="selection-description">
+                    بعد الاختيار، سيتم عرض الشهادات وإدارتها لهذه المؤسسة فقط. يمكنك تغيير الاختيار لاحقاً من أعلى اللوحة.
+                </p>
+            </div>
+            <div class="institutions-grid" id="institutionsList">
+                <!-- Institutions will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="dashboard" id="dashboardPage">
+        <div class="container">
+            <!-- Current Institution -->
+            <div class="current-institution">
+                <div class="institution-info">
+                    <h3 id="currentInstitutionName">الجمعية التعاونية الزراعية غرب نجران</h3>
+                    <p>إدارة شهادات الدورات التابعة للمؤسسة</p>
+                </div>
+                <button class="btn btn-secondary" onclick="showInstitutionSelection()">
+                    <i class="fas fa-exchange-alt"></i> تغيير المؤسسة
+                </button>
+            </div>
+
+            <!-- Search -->
+            <div class="search-bar">
+                <input type="text" class="search-input" id="searchInput" placeholder="بحث برقم الشهادة أو الاسم أو اسم الدورة..." oninput="searchCertificates()">
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card total">
+                    <div class="stat-info">
+                        <h3>إجمالي الشهادات</h3>
+                        <div class="stat-number" id="totalCount">0</div>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                </div>
+                <div class="stat-card valid">
+                    <div class="stat-info">
+                        <h3>شهادات صالحة</h3>
+                        <div class="stat-number" id="validCount">0</div>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                </div>
+                <div class="stat-card expired">
+                    <div class="stat-info">
+                        <h3>شهادات منتهية</h3>
+                        <div class="stat-number" id="expiredCount">0</div>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                </div>
+                <div class="stat-card cancelled">
+                    <div class="stat-info">
+                        <h3>شهادات ملغاة</h3>
+                        <div class="stat-number" id="cancelledCount">0</div>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-container">
+                <div class="table-header">
+                    <div class="table-title">قائمة الشهادات</div>
+                    <div class="table-info">متابعة الشهادات الصادرة للمؤسسة الحالية مع إمكانية البحث والتعديل والحذف.</div>
+                </div>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>رقم الشهادة</th>
+                                <th>اسم صاحب الشهادة</th>
+                                <th>اسم الدورة</th>
+                                <th>الفترة</th>
+                                <th>الحالة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="certificatesTable">
+                            <!-- Certificates will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="empty-state" id="emptyState" style="display: none;">
+                    <i class="fas fa-inbox"></i>
+                    <p>لا توجد شهادات حتى الآن.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="certificateModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">إضافة شهادة جديدة</h2>
+                <button class="modal-close" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="certificateForm">
+                    <input type="hidden" id="certificateId">
+                    
+                    <div class="form-group">
+                        <label class="form-label required">رقم الشهادة</label>
+                        <input type="text" class="form-input" id="certNumber" required placeholder="أدخل رقم الشهادة">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label required">اسم المتدرب</label>
+                        <input type="text" class="form-input" id="traineeName" required placeholder="أدخل اسم المتدرب">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label required">رقم الهوية</label>
+                        <input type="text" class="form-input" id="nationalId" required placeholder="أدخل رقم الهوية" maxlength="10">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label required">اسم الدورة</label>
+                        <input type="text" class="form-input" id="courseName" required placeholder="أدخل اسم الدورة">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label required">تاريخ بداية الدورة</label>
+                            <input type="date" class="form-input" id="startDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label required">تاريخ نهاية الدورة</label>
+                            <input type="date" class="form-input" id="endDate" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label required">عدد الساعات التدريبية</label>
+                            <input type="number" class="form-input" id="hours" required placeholder="عدد الساعات" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label required">عدد الأيام</label>
+                            <input type="number" class="form-input" id="days" required placeholder="عدد الأيام" min="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label required">حالة الشهادة</label>
+                        <select class="form-select" id="status" required>
+                            <option value="صالحة">صالحة</option>
+                            <option value="منتهية">منتهية</option>
+                            <option value="ملغية">ملغية</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">ملاحظات</label>
+                        <textarea class="form-textarea" id="notes" placeholder="أدخل ملاحظات إضافية"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">إلغاء</button>
+                <button class="btn btn-success" onclick="saveCertificate()">
+                    <i class="fas fa-save"></i> حفظ الشهادة
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Institutions Data
+        const institutions = [
+            { id: 1, name: 'الجمعية التعاونية الزراعية غرب نجران', description: 'إدارة شهادات الدورات التابعة للجمعية التعاونية الزراعية غرب نجران' },
+            { id: 2, name: 'الجمعية التعاونية للنحالين بأبها', description: 'إدارة شهادات الدورات التابعة لجمعية النحالين بأبها' },
+            { id: 3, name: 'جمعية النحل البلدي التعاونية', description: 'إدارة شهادات الدورات التابعة لجمعية النحل البلدي التعاونية' },
+            { id: 4, name: 'دومة الجندل', description: 'إدارة شهادات الدورات التابعة لمؤسسة دومة الجندل' },
+            { id: 5, name: 'الجمعية التعاونية للنحالين بمحايل عسير', description: 'إدارة شهادات الدورات التابعة للجمعية التعاونية للنحالين بمحايل عسير' },
+            { id: 6, name: 'الجمعية التعاونية لتربية النحل', description: 'إدارة شهادات الدورات التابعة للجمعية التعاونية لتربية النحل' },
+            { id: 7, name: 'منار', description: 'إدارة شهادات الدورات التابعة لمنار' }
+        ];
+
+        // Initialize
+        let currentInstitution = null;
+        let certificates = [];
+
+        // Load data from localStorage
+        function loadData() {
+            const savedInstitution = localStorage.getItem('currentInstitution');
+            const savedCertificates = localStorage.getItem('certificates');
+            
+            if (savedInstitution) {
+                currentInstitution = JSON.parse(savedInstitution);
+            }
+            
+            if (savedCertificates) {
+                certificates = JSON.parse(savedCertificates);
+            }
+        }
+
+        // Save data to localStorage
+        function saveData() {
+            localStorage.setItem('certificates', JSON.stringify(certificates));
+            if (currentInstitution) {
+                localStorage.setItem('currentInstitution', JSON.stringify(currentInstitution));
+            }
+        }
+
+        // Show Institution Selection
+        function showInstitutionSelection() {
+            document.getElementById('institutionPage').style.display = 'flex';
+            document.getElementById('dashboardPage').classList.remove('active');
+            document.getElementById('mainHeader').style.display = 'none';
+            
+            const institutionsList = document.getElementById('institutionsList');
+            institutionsList.innerHTML = institutions.map(inst => `
+                <div class="institution-card" onclick="selectInstitution(${inst.id})">
+                    <div class="institution-name">${inst.name}</div>
+                    <div class="institution-description">${inst.description}</div>
+                </div>
+            `).join('');
+        }
+
+        // Select Institution
+        function selectInstitution(id) {
+            currentInstitution = institutions.find(i => i.id === id);
+            saveData();
+            showDashboard();
+        }
+
+        // Show Dashboard
+        function showDashboard() {
+            if (!currentInstitution) {
+                showInstitutionSelection();
+                return;
+            }
+            
+            document.getElementById('institutionPage').style.display = 'none';
+            document.getElementById('dashboardPage').classList.add('active');
+            document.getElementById('mainHeader').style.display = 'block';
+            document.getElementById('headerSubtitle').textContent = currentInstitution.name;
+            document.getElementById('currentInstitutionName').textContent = currentInstitution.name;
+            
+            loadCertificates();
+            updateStats();
+        }
+
+        // Load Certificates
+        function loadCertificates() {
+            const tableBody = document.getElementById('certificatesTable');
+            const emptyState = document.getElementById('emptyState');
+            
+            const filteredCerts = certificates.filter(cert => 
+                cert.institutionId === currentInstitution.id
+            );
+            
+            if (filteredCerts.length === 0) {
+                tableBody.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            emptyState.style.display = 'none';
+            tableBody.innerHTML = filteredCerts.map(cert => `
+                <tr>
+                    <td>${cert.certNumber}</td>
+                    <td>${cert.traineeName}</td>
+                    <td>${cert.courseName}</td>
+                    <td>${cert.startDate} إلى ${cert.endDate}</td>
+                    <td><span class="status-badge status-${getStatusClass(cert.status)}">${cert.status}</span></td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-small btn-success" onclick="editCertificate('${cert.id}')">
+                                <i class="fas fa-edit"></i> تعديل
+                            </button>
+                            <button class="btn btn-small btn-danger" onclick="deleteCertificate('${cert.id}')">
+                                <i class="fas fa-trash"></i> حذف
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Get Status Class
+        function getStatusClass(status) {
+            const classes = {
+                'صالحة': 'valid',
+                'منتهية': 'expired',
+                'ملغية': 'cancelled'
+            };
+            return classes[status] || 'valid';
+        }
+
+        // Update Stats
+        function updateStats() {
+            const filteredCerts = certificates.filter(cert => 
+                cert.institutionId === currentInstitution.id
+            );
+            
+            const total = filteredCerts.length;
+            const valid = filteredCerts.filter(c => c.status === 'صالحة').length;
+            const expired = filteredCerts.filter(c => c.status === 'منتهية').length;
+            const cancelled = filteredCerts.filter(c => c.status === 'ملغية').length;
+            
+            document.getElementById('totalCount').textContent = total;
+            document.getElementById('validCount').textContent = valid;
+            document.getElementById('expiredCount').textContent = expired;
+            document.getElementById('cancelledCount').textContent = cancelled;
+        }
+
+        // Search Certificates
+        function searchCertificates() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const rows = document.querySelectorAll('#certificatesTable tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        }
+
+        // Open Modal
+        function openModal(certId = null) {
+            const modal = document.getElementById('certificateModal');
+            const form = document.getElementById('certificateForm');
+            const modalTitle = document.getElementById('modalTitle');
+            
+            form.reset();
+            
+            if (certId) {
+                const cert = certificates.find(c => c.id === certId);
+                if (cert) {
+                    modalTitle.textContent = 'تعديل شهادة';
+                    document.getElementById('certificateId').value = cert.id;
+                    document.getElementById('certNumber').value = cert.certNumber;
+                    document.getElementById('traineeName').value = cert.traineeName;
+                    document.getElementById('nationalId').value = cert.nationalId;
+                    document.getElementById('courseName').value = cert.courseName;
+                    document.getElementById('startDate').value = cert.startDate;
+                    document.getElementById('endDate').value = cert.endDate;
+                    document.getElementById('hours').value = cert.hours;
+                    document.getElementById('days').value = cert.days;
+                    document.getElementById('status').value = cert.status;
+                    document.getElementById('notes').value = cert.notes || '';
+                }
+            } else {
+                modalTitle.textContent = 'إضافة شهادة جديدة';
+                document.getElementById('certificateId').value = '';
+            }
+            
+            modal.classList.add('active');
+        }
+
+        // Close Modal
+        function closeModal() {
+            document.getElementById('certificateModal').classList.remove('active');
+        }
+
+        // Save Certificate
+        function saveCertificate() {
+            const certId = document.getElementById('certificateId').value;
+            const certNumber = document.getElementById('certNumber').value;
+            const traineeName = document.getElementById('traineeName').value;
+            const nationalId = document.getElementById('nationalId').value;
+            const courseName = document.getElementById('courseName').value;
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            const hours = document.getElementById('hours').value;
+            const days = document.getElementById('days').value;
+            const status = document.getElementById('status').value;
+            const notes = document.getElementById('notes').value;
+            
+            if (!certNumber || !traineeName || !nationalId || !courseName || !startDate || !endDate || !hours || !days || !status) {
+                alert('الرجاء تعبئة جميع الحقول المطلوبة');
+                return;
+            }
+            
+            if (certId) {
+                // Update existing
+                const index = certificates.findIndex(c => c.id === certId);
+                if (index !== -1) {
+                    certificates[index] = {
+                        ...certificates[index],
+                        certNumber,
+                        traineeName,
+                        nationalId,
+                        courseName,
+                        startDate,
+                        endDate,
+                        hours: parseInt(hours),
+                        days: parseInt(days),
+                        status,
+                        notes
+                    };
+                }
+            } else {
+                // Add new
+                const newCert = {
+                    id: Date.now().toString(),
+                    institutionId: currentInstitution.id,
+                    certNumber,
+                    traineeName,
+                    nationalId,
+                    courseName,
+                    startDate,
+                    endDate,
+                    hours: parseInt(hours),
+                    days: parseInt(days),
+                    status,
+                    notes,
+                    createdAt: new Date().toISOString()
+                };
+                certificates.push(newCert);
+            }
+            
+            saveData();
+            closeModal();
+            loadCertificates();
+            updateStats();
+        }
+
+        // Edit Certificate
+        function editCertificate(id) {
+            openModal(id);
+        }
+
+        // Delete Certificate
+        function deleteCertificate(id) {
+            if (confirm('هل أنت متأكد من حذف هذه الشهادة؟')) {
+                certificates = certificates.filter(c => c.id !== id);
+                saveData();
+                loadCertificates();
+                updateStats();
+            }
+        }
+
+        // Logout
+        function logout() {
+            if (confirm('هل تريد تسجيل الخروج؟')) {
+                localStorage.removeItem('currentInstitution');
+                currentInstitution = null;
+                showInstitutionSelection();
+            }
+        }
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            const modal = document.getElementById('certificateModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Initialize app
+        loadData();
+        if (currentInstitution) {
+            showDashboard();
+        } else {
+            showInstitutionSelection();
+        }
+    </script>
+</body>
+</html>
