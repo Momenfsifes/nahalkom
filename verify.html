@@ -19,6 +19,7 @@
             --text-light: #7f8c8d;
             --success: #27ae60;
             --danger: #e74c3c;
+            --warning: #f39c12;
         }
         body {
             font-family: 'Tajawal', sans-serif;
@@ -26,7 +27,6 @@
             min-height: 100vh;
         }
 
-        /* Header */
         .header {
             background: linear-gradient(135deg, var(--dark-green) 0%, var(--primary-green) 100%);
             color: var(--white);
@@ -37,13 +37,11 @@
         .header-content { display: flex; justify-content: space-between; align-items: center; }
         .logo { display: flex; align-items: center; gap: 15px; font-size: 1.8rem; font-weight: 800; }
         .logo i { color: var(--gold); font-size: 2.2rem; }
-        .header-link { color: var(--white); text-decoration: none; padding: 8px 20px; border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; transition: all 0.3s; }
+        .header-link { color: var(--white); text-decoration: none; padding: 8px 20px; border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; transition: all 0.3s; font-size: 0.9rem; }
         .header-link:hover { background: rgba(255,255,255,0.1); }
 
-        /* Main Content */
         .main-content { padding: 60px 20px; }
 
-        /* Search Section */
         .search-section { text-align: center; max-width: 700px; margin: 0 auto; }
         .search-title { font-size: 2.5rem; color: var(--primary-green); margin-bottom: 15px; font-weight: 800; }
         .search-subtitle { font-size: 1.2rem; color: var(--text-light); margin-bottom: 40px; }
@@ -76,12 +74,14 @@
             cursor: pointer;
             transition: all 0.3s;
             font-family: 'Tajawal', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
         .search-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4); }
         .error-message { background: #fee; color: #c33; padding: 15px; border-radius: 10px; margin-top: 20px; display: none; border-right: 4px solid #c33; }
         .error-message.show { display: block; }
 
-        /* Certificate Display */
         .certificate-display { display: none; max-width: 900px; margin: 0 auto; }
         .certificate-display.show { display: block; animation: fadeIn 0.5s; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -102,13 +102,6 @@
             position: relative;
             border-bottom: 5px solid var(--gold);
         }
-        .cert-header::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M30 0 L51.96 15 L51.96 45 L30 60 L8.04 45 L8.04 15 Z' fill='none' stroke='%23d4af37' stroke-width='0.5' opacity='0.2'/%3E%3C/svg%3E");
-            opacity: 0.3;
-        }
         .cert-header-content { position: relative; z-index: 1; }
         .cert-logo { font-size: 3rem; color: var(--gold); margin-bottom: 10px; }
         .cert-title { font-size: 2rem; font-weight: 800; margin-bottom: 5px; }
@@ -127,8 +120,22 @@
             transition: all 0.3s;
         }
         .detail-row:hover { background: #f0f4f8; transform: translateX(-5px); }
-        .detail-label { font-weight: 700; color: var(--primary-green); min-width: 180px; font-size: 1.05rem; }
+        .detail-label { font-weight: 700; color: var(--primary-green); min-width: 180px; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; }
         .detail-value { color: var(--text-dark); font-size: 1.05rem; flex: 1; }
+        
+        /* تنسيق رابط الموقع الإلكتروني */
+        .institution-link {
+            color: var(--primary-green);
+            text-decoration: none;
+            font-weight: 700;
+            border-bottom: 2px dashed var(--gold);
+            transition: all 0.3s;
+            word-break: break-all;
+        }
+        .institution-link:hover {
+            color: var(--dark-green);
+            border-bottom-style: solid;
+        }
 
         .cert-sidebar { text-align: center; }
         .qr-box {
@@ -167,7 +174,7 @@
         }
         .cert-number-box strong { color: var(--primary-green); }
 
-        .cert-actions { padding: 25px 40px; background: #f8f9fa; border-top: 2px solid var(--border-color); display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        .cert-actions { padding: 25px 40px; background: #f8f9fa; border-top: 2px solid #e0e0e0; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
         .action-btn {
             padding: 12px 30px;
             border: none;
@@ -204,9 +211,9 @@
             transform: rotate(-15deg);
             opacity: 0.8;
             z-index: 2;
+            line-height: 1.2;
         }
 
-        /* Footer */
         .footer { background: var(--dark-green); color: var(--white); text-align: center; padding: 25px; margin-top: 60px; }
 
         @media print {
@@ -224,12 +231,12 @@
             .detail-row { flex-direction: column; gap: 5px; }
             .detail-label { min-width: auto; }
             .verified-stamp { width: 70px; height: 70px; font-size: 0.7rem; }
+            .cert-actions { padding: 20px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
     <header class="header">
         <div class="container">
             <div class="header-content">
@@ -244,11 +251,9 @@
         </div>
     </header>
 
-    <!-- Main Content -->
     <main class="main-content">
         <div class="container">
             
-            <!-- Search Section -->
             <div class="search-section" id="searchSection">
                 <h1 class="search-title">التحقق من الشهادات</h1>
                 <p class="search-subtitle">تحقق من صحة شهادتك التدريبية بسهولة وأمان</p>
@@ -264,7 +269,6 @@
                 </div>
             </div>
 
-            <!-- Certificate Display -->
             <div class="certificate-display" id="certificateDisplay">
                 <div class="certificate-card">
                     <div class="cert-header">
@@ -290,6 +294,15 @@
                                 <div class="detail-row">
                                     <span class="detail-label"><i class="fas fa-building"></i> المؤسسة التدريبية:</span>
                                     <span class="detail-value" id="certInstitution">-</span>
+                                </div>
+                                <!-- حقل جديد لموقع المؤسسة -->
+                                <div class="detail-row" id="institutionUrlRow" style="display: none;">
+                                    <span class="detail-label"><i class="fas fa-globe"></i> موقع المؤسسة:</span>
+                                    <span class="detail-value">
+                                        <a id="certInstitutionUrl" href="#" target="_blank" class="institution-link">
+                                            <!-- سيتم وضع الرابط هنا تلقائياً -->
+                                        </a>
+                                    </span>
                                 </div>
                                 <div class="detail-row">
                                     <span class="detail-label"><i class="fas fa-book"></i> اسم الدورة:</span>
@@ -355,35 +368,31 @@
     </footer>
 
     <script>
-        // بيانات المؤسسات (نفس لوحة التحكم)
+        // تم تحديث قائمة المؤسسات لإضافة خاصية الرابط (url)
         const institutions = [
-            { id: 1, name: 'الجمعية التعاونية الزراعية غرب نجران' },
-            { id: 2, name: 'الجمعية التعاونية للنحالين بأبها' },
-            { id: 3, name: 'جمعية النحل البلدي التعاونية' },
-            { id: 4, name: 'دومة الجندل' },
-            { id: 5, name: 'الجمعية التعاونية للنحالين بمحايل عسير' },
-            { id: 6, name: 'الجمعية التعاونية لتربية النحل' },
-            { id: 7, name: 'منار' }
+            { id: 1, name: 'الجمعية التعاونية الزراعية غرب نجران', url: '' },
+            { id: 2, name: 'الجمعية التعاونية للنحالين بأبها', url: 'https://cabkabha.com/' },
+            { id: 3, name: 'جمعية النحل البلدي التعاونية', url: '' },
+            { id: 4, name: 'دومة الجندل', url: '' },
+            { id: 5, name: 'الجمعية التعاونية للنحالين بمحايل عسير', url: '' },
+            { id: 6, name: 'الجمعية التعاونية لتربية النحل', url: '' },
+            { id: 7, name: 'منار', url: '' }
         ];
 
-        // البحث عن الشهادة
         function searchCertificate() {
             const nationalId = document.getElementById('nationalId').value.trim();
             const errorDiv = document.getElementById('errorMessage');
             
-            // التحقق من صحة الإدخال
             if (nationalId.length !== 10 || !/^\d+$/.test(nationalId)) {
                 errorDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> الرجاء إدخال رقم هوية صحيح (10 أرقام)';
                 errorDiv.classList.add('show');
                 return;
             }
             
-            // البحث في الشهادات
             const certificates = JSON.parse(localStorage.getItem('certificates') || '[]');
             const certificate = certificates.find(cert => cert.nationalId === nationalId);
             
             if (certificate) {
-                // عرض الشهادة
                 displayCertificate(certificate);
             } else {
                 errorDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> لم يتم العثور على شهادة بهذا الرقم';
@@ -392,13 +401,10 @@
             }
         }
 
-        // عرض الشهادة
         function displayCertificate(cert) {
-            // إخفاء البحث وإظهار الشهادة
             document.getElementById('searchSection').style.display = 'none';
             document.getElementById('certificateDisplay').classList.add('show');
             
-            // ملء البيانات
             document.getElementById('certTraineeName').textContent = cert.traineeName;
             document.getElementById('certNationalId').textContent = maskId(cert.nationalId);
             document.getElementById('certCourse').textContent = cert.courseName;
@@ -408,11 +414,22 @@
             document.getElementById('certDays').textContent = cert.days + ' يوم';
             document.getElementById('certNumber').textContent = cert.certNumber;
             
-            // اسم المؤسسة
+            // البحث عن بيانات المؤسسة
             const institution = institutions.find(i => i.id === cert.institutionId);
             document.getElementById('certInstitution').textContent = institution ? institution.name : '-';
             
-            // الحالة
+            // عرض رابط المؤسسة إذا كان موجوداً
+            const urlRow = document.getElementById('institutionUrlRow');
+            const urlLink = document.getElementById('certInstitutionUrl');
+            
+            if (institution && institution.url && institution.url.trim() !== '') {
+                urlRow.style.display = 'flex';
+                urlLink.href = institution.url;
+                urlLink.textContent = institution.url;
+            } else {
+                urlRow.style.display = 'none';
+            }
+            
             const statusBadge = document.getElementById('statusBadge');
             const statusText = statusBadge.querySelector('span');
             const statusIcon = statusBadge.querySelector('i');
@@ -432,17 +449,14 @@
                 statusText.textContent = 'شهادة ملغية';
             }
             
-            // QR Code
-            const qrData = `NHK-VERIFY-${cert.certNumber}-${cert.nationalId}`;
-            document.getElementById('qrImage').src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(qrData)}`;
+            const qrData = 'NHK-VERIFY-' + cert.certNumber + '-' + cert.nationalId;
+            document.getElementById('qrImage').src = 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=' + encodeURIComponent(qrData);
         }
 
-        // إخفاء جزء من رقم الهوية
         function maskId(id) {
             return id.substring(0, 3) + '-***-****-' + id.substring(9);
         }
 
-        // بحث جديد
         function newSearch() {
             document.getElementById('searchSection').style.display = 'block';
             document.getElementById('certificateDisplay').classList.remove('show');
@@ -450,20 +464,13 @@
             document.getElementById('errorMessage').classList.remove('show');
         }
 
-        // البحث بزر Enter
         document.getElementById('nationalId').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') searchCertificate();
         });
 
-        // مسح الخطأ عند الكتابة
         document.getElementById('nationalId').addEventListener('input', function() {
             document.getElementById('errorMessage').classList.remove('show');
         });
-
-        // التحقق من وجود بيانات في localStorage (للتجربة)
-        if (!localStorage.getItem('certificates')) {
-            console.log('لا توجد شهادات في النظام. أضف شهادات من لوحة التحكم أولاً.');
-        }
     </script>
 </body>
 </html>
