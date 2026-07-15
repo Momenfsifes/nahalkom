@@ -12,7 +12,7 @@
             --primary-green: #2d7a3e;
             --dark-green: #1e5a2e;
             --gold: #d4af37;
-            --orange: #f39c12;
+            --orange: #e8963e;
             --white: #ffffff;
             --text-dark: #2c3e50;
             --text-light: #7f8c8d;
@@ -34,104 +34,149 @@
         .site-logo { display: flex; align-items: center; gap: 12px; font-size: 1.8rem; font-weight: 800; }
         .site-logo i { color: var(--gold); font-size: 2.2rem; }
 
-        /* الهيدر الديناميكي - يظهر بعد البحث */
-        #dynamicHeader {
+        /* الهيدر الرسمي - مطابق للموقع الحقيقي */
+        #officialHeader {
             display: none;
             background: var(--white);
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
             cursor: pointer;
         }
-        .dynamic-header-container {
+        
+        /* الشريط العلوي */
+        .top-bar {
+            background: #f8f9fa;
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .top-bar-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 15px 20px;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #666;
+        }
+        .top-bar-social {
+            display: flex;
+            gap: 15px;
+        }
+        .top-bar-social a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .top-bar-social a:hover {
+            color: var(--orange);
+        }
+        .top-bar-contact {
+            display: flex;
+            gap: 20px;
+        }
+        .top-bar-contact span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        /* الهيدر الرئيسي */
+        .main-header-bar {
+            padding: 15px 0;
+        }
+        .main-header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .header-logo-section {
+        .official-logo {
             display: flex;
             align-items: center;
             gap: 15px;
         }
-        .header-logo-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--gold) 0%, #b8941f 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-size: 1.5rem;
+        .official-logo img {
+            height: 70px;
+            width: auto;
         }
-        .header-logo-text {
+        .official-logo-text {
             display: flex;
             flex-direction: column;
         }
-        .header-logo-title {
-            font-size: 1.2rem;
+        .official-logo-title {
+            font-size: 1.3rem;
             font-weight: 800;
-            color: var(--dark-green);
-            line-height: 1.2;
+            color: var(--orange);
+            line-height: 1.3;
         }
-        .header-logo-subtitle {
-            font-size: 0.85rem;
-            color: var(--text-light);
+        .official-logo-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            font-weight: 600;
         }
-        .header-nav {
+        
+        /* قائمة التنقل */
+        .official-nav {
             display: flex;
             gap: 25px;
             list-style: none;
+            align-items: center;
         }
-        .header-nav a {
+        .official-nav li {
+            position: relative;
+        }
+        .official-nav a {
             color: var(--text-dark);
             text-decoration: none;
             font-weight: 600;
             font-size: 0.95rem;
             transition: color 0.3s;
-            position: relative;
+            padding: 10px 0;
+            display: block;
         }
-        .header-nav a:hover {
-            color: var(--primary-green);
+        .official-nav a:hover {
+            color: var(--orange);
         }
-        .header-nav a::after {
+        .official-nav a::after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: 0;
             right: 0;
             width: 0;
             height: 2px;
-            background: var(--gold);
+            background: var(--orange);
             transition: width 0.3s;
         }
-        .header-nav a:hover::after {
+        .official-nav a:hover::after {
             width: 100%;
         }
-        .header-cta {
-            background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
-            color: var(--white);
-            padding: 10px 25px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.9rem;
-            transition: all 0.3s;
+        .nav-dropdown {
+            position: relative;
         }
-        .header-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(45, 122, 62, 0.3);
+        .nav-dropdown > a::before {
+            content: '\f107';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            margin-right: 5px;
+            font-size: 0.8rem;
         }
+        
+        /* شريط التلميح */
         .header-hint {
-            background: rgba(212, 175, 55, 0.1);
-            padding: 8px;
+            background: linear-gradient(135deg, var(--orange) 0%, #d4852e 100%);
+            color: var(--white);
             text-align: center;
+            padding: 8px;
             font-size: 0.85rem;
-            color: var(--gold);
-            border-bottom: 2px solid var(--gold);
+            font-weight: 600;
+        }
+        .header-hint i {
+            margin-left: 8px;
         }
 
         .main-content { padding: 60px 20px; max-width: 1000px; margin: 0 auto; }
@@ -308,7 +353,7 @@
         .footer-bottom p { opacity: 0.8; margin-bottom: 10px; }
 
         @media print {
-            .default-header, #dynamicHeader, .search-section, .cert-actions, .site-footer { display: none !important; }
+            .default-header, #officialHeader, .search-section, .cert-actions, .site-footer { display: none !important; }
             body { background: white; }
             .certificate-card { box-shadow: none; border: 2px solid var(--gold); }
         }
@@ -320,8 +365,9 @@
             .cert-body { padding: 25px; }
             .cert-actions { padding: 20px; flex-direction: column; }
             .action-btn { width: 100%; justify-content: center; }
-            .header-nav { display: none; }
-            .dynamic-header-container { flex-wrap: wrap; gap: 15px; }
+            .official-nav { display: none; }
+            .top-bar-contact { display: none; }
+            .official-logo img { height: 50px; }
         }
     </style>
 </head>
@@ -337,30 +383,59 @@
         </div>
     </header>
 
-    <!-- الهيدر الديناميكي - يظهر بعد البحث -->
-    <header id="dynamicHeader">
+    <!-- الهيدر الرسمي - مطابق للموقع الحقيقي -->
+    <header id="officialHeader">
         <div class="header-hint">
-            <i class="fas fa-hand-pointer"></i> اضغط في أي مكان للانتقال إلى الموقع الرسمي
+            <i class="fas fa-hand-pointer"></i> اضغط في أي مكان للانتقال إلى الموقع الرسمي للجمعية
         </div>
-        <div class="dynamic-header-container">
-            <div class="header-logo-section">
-                <div class="header-logo-icon">
-                    <i class="fas fa-bee"></i>
+        
+        <!-- الشريط العلوي -->
+        <div class="top-bar">
+            <div class="top-bar-container">
+                <div class="top-bar-social">
+                    <a href="#" onclick="event.preventDefault()"><i class="fab fa-twitter"></i></a>
+                    <a href="#" onclick="event.preventDefault()"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" onclick="event.preventDefault()"><i class="fab fa-instagram"></i></a>
+                    <a href="#" onclick="event.preventDefault()"><i class="fab fa-youtube"></i></a>
+                    <a href="#" onclick="event.preventDefault()"><i class="fab fa-whatsapp"></i></a>
                 </div>
-                <div class="header-logo-text">
-                    <div class="header-logo-title" id="headerInstitutionName">اسم المؤسسة</div>
-                    <div class="header-logo-subtitle">منصة التحقق من الشهادات</div>
+                <div class="top-bar-contact">
+                    <span><i class="fas fa-phone"></i> +966 XX XXX XXXX</span>
+                    <span><i class="fas fa-envelope"></i> info@ibcsociety.com.sa</span>
+                    <span><i class="fas fa-map-marker-alt"></i> أبها، المملكة العربية السعودية</span>
                 </div>
             </div>
-            <ul class="header-nav">
-                <li><a href="#" onclick="event.preventDefault()">الرئيسية</a></li>
-                <li><a href="#" onclick="event.preventDefault()">من نحن</a></li>
-                <li><a href="#" onclick="event.preventDefault()">الجمعية العمومية</a></li>
-                <li><a href="#" onclick="event.preventDefault()">الإدارة</a></li>
-                <li><a href="#" onclick="event.preventDefault()">المركز الإعلامي</a></li>
-                <li><a href="#" onclick="event.preventDefault()">الحوكمة</a></li>
-            </ul>
-            <a href="#" class="header-cta" onclick="event.preventDefault()">اتصل بنا</a>
+        </div>
+        
+        <!-- الهيدر الرئيسي -->
+        <div class="main-header-bar">
+            <div class="main-header-container">
+                <div class="official-logo">
+                    <img src="https://ibcosociety.com.sa/wp-content/uploads/2024/01/cropped-logo.png" alt="شعار الجمعية" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'70\' height=\'70\'><circle cx=\'35\' cy=\'35\' r=\'30\' fill=\'%23e8963e\'/><text x=\'35\' y=\'40\' text-anchor=\'middle\' fill=\'white\' font-size=\'20\' font-weight=\'bold\'>نحل</text></svg>'">
+                    <div class="official-logo-text">
+                        <div class="official-logo-title">الجمعية التعاونية</div>
+                        <div class="official-logo-title">للنحالين بأبها</div>
+                    </div>
+                </div>
+                
+                <ul class="official-nav">
+                    <li><a href="#" onclick="event.preventDefault()">الرئيسية</a></li>
+                    <li><a href="#" onclick="event.preventDefault()">من نحن</a></li>
+                    <li class="nav-dropdown">
+                        <a href="#" onclick="event.preventDefault()">الجمعية العمومية</a>
+                    </li>
+                    <li class="nav-dropdown">
+                        <a href="#" onclick="event.preventDefault()">الإدارة</a>
+                    </li>
+                    <li class="nav-dropdown">
+                        <a href="#" onclick="event.preventDefault()">المركز الإعلامي</a>
+                    </li>
+                    <li class="nav-dropdown">
+                        <a href="#" onclick="event.preventDefault()">الحوكمة</a>
+                    </li>
+                    <li><a href="#" onclick="event.preventDefault()">اتصل بنا للشكاوى والاستفسارات</a></li>
+                </ul>
+            </div>
         </div>
     </header>
 
@@ -475,43 +550,43 @@
                 id: 1, 
                 name: 'الجمعية التعاونية الزراعية غرب نجران', 
                 realUrl: 'https://najran-bees-real.com',
-                email: 'info@najran-bees.com'
+                logo: 'https://najran-bees.com/logo.png'
             },
             { 
                 id: 2, 
                 name: 'الجمعية التعاونية للنحالين بأبها', 
                 realUrl: 'https://ibcosociety.com.sa',
-                email: 'info@ibcsociety.com'
+                logo: 'https://ibcosociety.com.sa/wp-content/uploads/2024/01/cropped-logo.png'
             },
             { 
                 id: 3, 
                 name: 'جمعية النحل البلدي التعاونية', 
                 realUrl: 'https://baladi-bees-real.com',
-                email: 'info@baladi-bees.com'
+                logo: ''
             },
             { 
                 id: 4, 
                 name: 'دومة الجندل', 
                 realUrl: 'https://dumat-bees-real.com',
-                email: 'info@dumat-bees.com'
+                logo: ''
             },
             { 
                 id: 5, 
                 name: 'الجمعية التعاونية للنحالين بمحايل عسير', 
                 realUrl: 'https://mahayel-bees-real.com',
-                email: 'info@mahayel-bees.com'
+                logo: ''
             },
             { 
                 id: 6, 
                 name: 'الجمعية التعاونية لتربية النحل', 
                 realUrl: 'https://tarbiat-bees-real.com',
-                email: 'info@tarbiat-bees.com'
+                logo: ''
             },
             { 
                 id: 7, 
                 name: 'منار', 
                 realUrl: 'https://manar-bees-real.com',
-                email: 'info@manar-bees.com'
+                logo: ''
             }
         ];
 
@@ -537,15 +612,20 @@
                 if (institution) {
                     currentRealUrl = institution.realUrl;
                     
-                    // تحديث الهيدر الديناميكي
-                    document.getElementById('headerInstitutionName').textContent = institution.name;
+                    // تحديث الهيدر الرسمي
                     document.getElementById('certSubtitle').textContent = institution.name + ' - منصة التحقق من الشهادات التدريبية';
                     
-                    // إخفاء الهيدر الافتراضي وإظهار الهيدر الديناميكي
-                    document.getElementById('defaultHeader').style.display = 'none';
-                    document.getElementById('dynamicHeader').style.display = 'block';
+                    // تحديث الشعار إذا كان متاحاً
+                    const logoImg = document.querySelector('#officialHeader .official-logo img');
+                    if (institution.logo && logoImg) {
+                        logoImg.src = institution.logo;
+                    }
                     
-                    console.log('تم إظهار الهيدر للمؤسسة:', institution.name);
+                    // إخفاء الهيدر الافتراضي وإظهار الهيدر الرسمي
+                    document.getElementById('defaultHeader').style.display = 'none';
+                    document.getElementById('officialHeader').style.display = 'block';
+                    
+                    console.log('تم إظهار الهيدر الرسمي للمؤسسة:', institution.name);
                     console.log('الرابط الرسمي:', currentRealUrl);
                 }
                 
@@ -605,14 +685,14 @@
             document.getElementById('searchSection').style.display = 'block';
             document.getElementById('certificateDisplay').classList.remove('show');
             document.getElementById('defaultHeader').style.display = 'block';
-            document.getElementById('dynamicHeader').style.display = 'none';
+            document.getElementById('officialHeader').style.display = 'none';
             document.getElementById('nationalId').value = '';
             document.getElementById('errorMessage').classList.remove('show');
             currentRealUrl = '';
         }
 
-        // التحويل عند النقر على الهيدر الديناميكي
-        document.getElementById('dynamicHeader').addEventListener('click', function(e) {
+        // التحويل عند النقر على الهيدر الرسمي
+        document.getElementById('officialHeader').addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
             
@@ -623,7 +703,7 @@
         });
 
         // منع النقر على الروابط داخل الهيدر
-        document.querySelectorAll('#dynamicHeader a').forEach(function(link) {
+        document.querySelectorAll('#officialHeader a').forEach(function(link) {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
