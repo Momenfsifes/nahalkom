@@ -331,7 +331,7 @@
         function initUsers() {
             if (!localStorage.getItem('users')) {
                 const defaultUsers = [
-                    { username: 'nahalkom', password: 'Nahal2024!', role: 'admin', name: 'مدير نظام نحلكم' }
+                    { username: 'admin', password: 'admin123', role: 'admin', name: 'المسؤول' },
                     { username: 'user', password: 'user123', role: 'user', name: 'مستخدم' }
                 ];
                 localStorage.setItem('users', JSON.stringify(defaultUsers));
