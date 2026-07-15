@@ -20,6 +20,7 @@
             --success: #27ae60;
             --danger: #e74c3c;
             --warning: #f39c12;
+            --orange: #f39c12;
         }
         body {
             font-family: 'Tajawal', sans-serif;
@@ -33,7 +34,7 @@
             padding: 20px 0;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
-        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         .header-content { display: flex; justify-content: space-between; align-items: center; }
         .logo { display: flex; align-items: center; gap: 15px; font-size: 1.8rem; font-weight: 800; }
         .logo i { color: var(--gold); font-size: 2.2rem; }
@@ -82,7 +83,7 @@
         .error-message { background: #fee; color: #c33; padding: 15px; border-radius: 10px; margin-top: 20px; display: none; border-right: 4px solid #c33; }
         .error-message.show { display: block; }
 
-        .certificate-display { display: none; max-width: 900px; margin: 0 auto; }
+        .certificate-display { display: none; max-width: 1000px; margin: 0 auto; }
         .certificate-display.show { display: block; animation: fadeIn 0.5s; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -91,135 +92,176 @@
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 15px 50px rgba(0,0,0,0.15);
-            border: 3px solid var(--gold);
+            border: 4px solid var(--gold);
         }
 
         .cert-header {
             background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
             color: var(--white);
-            padding: 30px;
+            padding: 40px;
             text-align: center;
             position: relative;
-            border-bottom: 5px solid var(--gold);
+            border-bottom: 6px solid var(--gold);
         }
         .cert-header-content { position: relative; z-index: 1; }
-        .cert-logo { font-size: 3rem; color: var(--gold); margin-bottom: 10px; }
-        .cert-title { font-size: 2rem; font-weight: 800; margin-bottom: 5px; }
-        .cert-subtitle { opacity: 0.9; font-size: 1rem; }
+        .cert-logo { font-size: 4rem; color: var(--gold); margin-bottom: 15px; }
+        .cert-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; }
+        .cert-subtitle { opacity: 0.95; font-size: 1.1rem; }
 
-        .cert-body { padding: 40px; }
+        .cert-body { padding: 50px; }
         .cert-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; }
 
         .cert-details { display: flex; flex-direction: column; gap: 20px; }
         .detail-row {
             display: flex;
-            padding: 18px;
-            background: #f8f9fa;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
             border-radius: 12px;
-            border-right: 4px solid var(--gold);
+            border-right: 5px solid var(--gold);
             transition: all 0.3s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-        .detail-row:hover { background: #f0f4f8; transform: translateX(-5px); }
-        .detail-label { font-weight: 700; color: var(--primary-green); min-width: 180px; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; }
-        .detail-value { color: var(--text-dark); font-size: 1.05rem; flex: 1; }
+        .detail-row:hover { 
+            background: linear-gradient(135deg, #f0f4f8 0%, #fff 100%); 
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .detail-label { 
+            font-weight: 700; 
+            color: var(--primary-green); 
+            min-width: 200px; 
+            font-size: 1.1rem; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+        }
+        .detail-value { color: var(--text-dark); font-size: 1.1rem; flex: 1; font-weight: 500; }
         
-        /* تنسيق رابط الموقع الإلكتروني */
         .institution-link {
-            color: var(--primary-green);
+            color: var(--orange);
             text-decoration: none;
             font-weight: 700;
             border-bottom: 2px dashed var(--gold);
             transition: all 0.3s;
             word-break: break-all;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
         .institution-link:hover {
             color: var(--dark-green);
             border-bottom-style: solid;
+            transform: scale(1.02);
         }
 
         .cert-sidebar { text-align: center; }
         .qr-box {
-            background: var(--light-gold);
-            padding: 25px;
+            background: linear-gradient(135deg, var(--light-gold) 0%, #fff 100%);
+            padding: 30px;
             border-radius: 15px;
-            border: 3px solid var(--gold);
-            margin-bottom: 20px;
+            border: 4px solid var(--gold);
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.2);
         }
-        .qr-title { color: var(--primary-green); font-size: 1rem; font-weight: 700; margin-bottom: 15px; }
-        .qr-code { width: 180px; height: 180px; background: var(--white); margin: 0 auto; padding: 10px; border-radius: 10px; }
+        .qr-title { color: var(--primary-green); font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; }
+        .qr-code { width: 200px; height: 200px; background: var(--white); margin: 0 auto; padding: 15px; border-radius: 12px; box-shadow: 0 3px 15px rgba(0,0,0,0.1); }
         .qr-code img { width: 100%; height: 100%; }
 
         .status-badge {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            padding: 15px 30px;
+            gap: 12px;
+            padding: 18px 35px;
             border-radius: 50px;
             font-weight: 700;
-            font-size: 1.1rem;
-            margin-top: 10px;
+            font-size: 1.2rem;
+            margin-top: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
-        .status-valid { background: #d4edda; color: #155724; }
-        .status-expired { background: #fff3cd; color: #856404; }
-        .status-cancelled { background: #f8d7da; color: #721c24; }
+        .status-valid { background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); color: #155724; }
+        .status-expired { background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%); color: #856404; }
+        .status-cancelled { background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%); color: #721c24; }
 
         .cert-number-box {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 15px;
-            font-family: monospace;
-            font-size: 0.95rem;
-            color: var(--text-dark);
-        }
-        .cert-number-box strong { color: var(--primary-green); }
-
-        .cert-actions { padding: 25px 40px; background: #f8f9fa; border-top: 2px solid #e0e0e0; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
-        .action-btn {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 10px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            font-family: 'Courier New', monospace;
             font-size: 1rem;
+            color: var(--text-dark);
+            border: 2px dashed var(--gold);
+        }
+        .cert-number-box strong { color: var(--primary-green); font-size: 1.1rem; }
+
+        .cert-actions { 
+            padding: 30px 50px; 
+            background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%); 
+            border-top: 3px solid var(--gold); 
+            display: flex; 
+            gap: 20px; 
+            justify-content: center; 
+            flex-wrap: wrap; 
+        }
+        .action-btn {
+            padding: 15px 35px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
             font-family: 'Tajawal', sans-serif;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
-        .btn-print { background: var(--primary-green); color: var(--white); }
-        .btn-print:hover { background: var(--dark-green); transform: translateY(-2px); }
-        .btn-new { background: var(--gold); color: var(--white); }
-        .btn-new:hover { background: #b8941f; transform: translateY(-2px); }
+        .btn-print { background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%); color: var(--white); }
+        .btn-print:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(45, 122, 62, 0.4); }
+        .btn-new { background: linear-gradient(135deg, var(--gold) 0%, #b8941f 100%); color: var(--white); }
+        .btn-new:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4); }
+        .btn-visit { 
+            background: linear-gradient(135deg, var(--orange) 0%, #e67e22 100%); 
+            color: var(--white); 
+        }
+        .btn-visit:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(243, 156, 18, 0.4); }
 
         .verified-stamp {
             position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 100px;
-            height: 100px;
-            border: 4px solid var(--gold);
+            top: 25px;
+            left: 25px;
+            width: 120px;
+            height: 120px;
+            border: 5px solid var(--gold);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--gold);
             font-weight: 800;
-            font-size: 0.9rem;
+            font-size: 1rem;
             text-align: center;
             transform: rotate(-15deg);
-            opacity: 0.8;
+            opacity: 0.9;
             z-index: 2;
-            line-height: 1.2;
+            line-height: 1.3;
+            background: rgba(255,255,255,0.1);
         }
 
-        .footer { background: var(--dark-green); color: var(--white); text-align: center; padding: 25px; margin-top: 60px; }
+        .footer { 
+            background: linear-gradient(135deg, var(--dark-green) 0%, var(--primary-green) 100%); 
+            color: var(--white); 
+            text-align: center; 
+            padding: 30px; 
+            margin-top: 60px;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+        }
 
         @media print {
             .header, .search-section, .cert-actions, .footer { display: none !important; }
             .main-content { padding: 0; }
-            .certificate-card { box-shadow: none; border: 2px solid var(--gold); }
+            .certificate-card { box-shadow: none; border: 3px solid var(--gold); }
             body { background: white; }
         }
 
@@ -228,10 +270,11 @@
             .input-group { flex-direction: column; }
             .cert-grid { grid-template-columns: 1fr; }
             .cert-body { padding: 25px; }
-            .detail-row { flex-direction: column; gap: 5px; }
+            .detail-row { flex-direction: column; gap: 10px; }
             .detail-label { min-width: auto; }
-            .verified-stamp { width: 70px; height: 70px; font-size: 0.7rem; }
-            .cert-actions { padding: 20px; }
+            .verified-stamp { width: 80px; height: 80px; font-size: 0.75rem; }
+            .cert-actions { padding: 20px; flex-direction: column; }
+            .action-btn { width: 100%; justify-content: center; }
         }
     </style>
 </head>
@@ -272,7 +315,7 @@
             <div class="certificate-display" id="certificateDisplay">
                 <div class="certificate-card">
                     <div class="cert-header">
-                        <div class="verified-stamp">شهادة<br>معتمدة</div>
+                        <div class="verified-stamp">شهادة<br>معتمدة<br>رسمياً</div>
                         <div class="cert-header-content">
                             <div class="cert-logo"><i class="fas fa-award"></i></div>
                             <h1 class="cert-title">شهادة تدريبية معتمدة</h1>
@@ -295,12 +338,12 @@
                                     <span class="detail-label"><i class="fas fa-building"></i> المؤسسة التدريبية:</span>
                                     <span class="detail-value" id="certInstitution">-</span>
                                 </div>
-                                <!-- حقل جديد لموقع المؤسسة -->
                                 <div class="detail-row" id="institutionUrlRow" style="display: none;">
-                                    <span class="detail-label"><i class="fas fa-globe"></i> موقع المؤسسة:</span>
+                                    <span class="detail-label"><i class="fas fa-globe"></i> الموقع الإلكتروني:</span>
                                     <span class="detail-value">
                                         <a id="certInstitutionUrl" href="#" target="_blank" class="institution-link">
-                                            <!-- سيتم وضع الرابط هنا تلقائياً -->
+                                            <i class="fas fa-external-link-alt"></i>
+                                            <span>زيارة الموقع الرسمي</span>
                                         </a>
                                     </span>
                                 </div>
@@ -332,7 +375,7 @@
 
                             <div class="cert-sidebar">
                                 <div class="qr-box">
-                                    <div class="qr-title">رمز التحقق السريع</div>
+                                    <div class="qr-title"><i class="fas fa-qrcode"></i> رمز التحقق السريع</div>
                                     <div class="qr-code">
                                         <img id="qrImage" src="" alt="QR Code">
                                     </div>
@@ -342,8 +385,8 @@
                                     <span>شهادة صالحة</span>
                                 </div>
                                 <div class="cert-number-box">
-                                    <strong>رقم الشهادة:</strong><br>
-                                    <span id="certNumber">-</span>
+                                    <strong><i class="fas fa-hashtag"></i> رقم الشهادة:</strong><br>
+                                    <span id="certNumber" style="font-size: 1.2rem; font-weight: 700; margin-top: 8px; display: block;">-</span>
                                 </div>
                             </div>
                         </div>
@@ -352,6 +395,9 @@
                     <div class="cert-actions">
                         <button class="action-btn btn-print" onclick="window.print()">
                             <i class="fas fa-print"></i> طباعة الشهادة
+                        </button>
+                        <button class="action-btn btn-visit" id="btnVisitInstitution" onclick="visitInstitution()" style="display: none;">
+                            <i class="fas fa-external-link-alt"></i> زيارة موقع المؤسسة
                         </button>
                         <button class="action-btn btn-new" onclick="newSearch()">
                             <i class="fas fa-search"></i> بحث جديد
@@ -368,16 +414,18 @@
     </footer>
 
     <script>
-        // تم تحديث قائمة المؤسسات لإضافة خاصية الرابط (url)
+        // تم تحديث قائمة المؤسسات مع الروابط الصحيحة
         const institutions = [
             { id: 1, name: 'الجمعية التعاونية الزراعية غرب نجران', url: '' },
-            { id: 2, name: 'الجمعية التعاونية للنحالين بأبها', url: 'https://cabkabha.com/' },
+            { id: 2, name: 'الجمعية التعاونية للنحالين بأبها', url: 'https://ibcosociety.com.sa' },
             { id: 3, name: 'جمعية النحل البلدي التعاونية', url: '' },
             { id: 4, name: 'دومة الجندل', url: '' },
             { id: 5, name: 'الجمعية التعاونية للنحالين بمحايل عسير', url: '' },
             { id: 6, name: 'الجمعية التعاونية لتربية النحل', url: '' },
             { id: 7, name: 'منار', url: '' }
         ];
+
+        let currentInstitutionUrl = '';
 
         function searchCertificate() {
             const nationalId = document.getElementById('nationalId').value.trim();
@@ -414,20 +462,25 @@
             document.getElementById('certDays').textContent = cert.days + ' يوم';
             document.getElementById('certNumber').textContent = cert.certNumber;
             
-            // البحث عن بيانات المؤسسة
             const institution = institutions.find(i => i.id === cert.institutionId);
             document.getElementById('certInstitution').textContent = institution ? institution.name : '-';
             
-            // عرض رابط المؤسسة إذا كان موجوداً
             const urlRow = document.getElementById('institutionUrlRow');
             const urlLink = document.getElementById('certInstitutionUrl');
+            const btnVisit = document.getElementById('btnVisitInstitution');
             
             if (institution && institution.url && institution.url.trim() !== '') {
                 urlRow.style.display = 'flex';
                 urlLink.href = institution.url;
-                urlLink.textContent = institution.url;
+                currentInstitutionUrl = institution.url;
+                btnVisit.style.display = 'inline-flex';
+                btnVisit.onclick = function() {
+                    window.open(institution.url, '_blank');
+                };
             } else {
                 urlRow.style.display = 'none';
+                btnVisit.style.display = 'none';
+                currentInstitutionUrl = '';
             }
             
             const statusBadge = document.getElementById('statusBadge');
@@ -450,7 +503,13 @@
             }
             
             const qrData = 'NHK-VERIFY-' + cert.certNumber + '-' + cert.nationalId;
-            document.getElementById('qrImage').src = 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=' + encodeURIComponent(qrData);
+            document.getElementById('qrImage').src = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(qrData);
+        }
+
+        function visitInstitution() {
+            if (currentInstitutionUrl) {
+                window.open(currentInstitutionUrl, '_blank');
+            }
         }
 
         function maskId(id) {
@@ -462,6 +521,7 @@
             document.getElementById('certificateDisplay').classList.remove('show');
             document.getElementById('nationalId').value = '';
             document.getElementById('errorMessage').classList.remove('show');
+            currentInstitutionUrl = '';
         }
 
         document.getElementById('nationalId').addEventListener('keypress', function(e) {
