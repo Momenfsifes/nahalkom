@@ -45,13 +45,13 @@
             cursor: pointer;
         }
         
-        /* الشريط العلوي */
-        .top-bar {
+        /* الشريط العلوي للمعلومات */
+        .top-info-bar {
             background: #f8f9fa;
-            padding: 8px 0;
             border-bottom: 1px solid #e0e0e0;
+            padding: 10px 0;
         }
-        .top-bar-container {
+        .top-info-container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
@@ -61,30 +61,33 @@
             font-size: 0.85rem;
             color: #666;
         }
-        .top-bar-social {
+        .top-info-social {
             display: flex;
-            gap: 15px;
+            gap: 12px;
         }
-        .top-bar-social a {
+        .top-info-social a {
             color: #666;
-            text-decoration: none;
+            font-size: 1rem;
             transition: color 0.3s;
         }
-        .top-bar-social a:hover {
+        .top-info-social a:hover {
             color: var(--orange);
         }
-        .top-bar-contact {
+        .top-info-contact {
             display: flex;
             gap: 20px;
         }
-        .top-bar-contact span {
+        .top-info-contact span {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
+        }
+        .top-info-contact i {
+            color: var(--orange);
         }
         
         /* الهيدر الرئيسي */
-        .main-header-bar {
+        .main-header {
             padding: 15px 0;
         }
         .main-header-container {
@@ -100,24 +103,25 @@
             align-items: center;
             gap: 15px;
         }
-        .official-logo img {
-            height: 70px;
+        .official-logo-img {
+            height: 80px;
             width: auto;
         }
         .official-logo-text {
             display: flex;
             flex-direction: column;
         }
-        .official-logo-title {
-            font-size: 1.3rem;
+        .official-logo-line1 {
+            font-size: 1.4rem;
             font-weight: 800;
             color: var(--orange);
             line-height: 1.3;
         }
-        .official-logo-subtitle {
-            font-size: 0.9rem;
-            color: var(--text-dark);
-            font-weight: 600;
+        .official-logo-line2 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--orange);
+            line-height: 1.3;
         }
         
         /* قائمة التنقل */
@@ -133,7 +137,7 @@
         .official-nav a {
             color: var(--text-dark);
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 0.95rem;
             transition: color 0.3s;
             padding: 10px 0;
@@ -142,23 +146,7 @@
         .official-nav a:hover {
             color: var(--orange);
         }
-        .official-nav a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 0;
-            height: 2px;
-            background: var(--orange);
-            transition: width 0.3s;
-        }
-        .official-nav a:hover::after {
-            width: 100%;
-        }
-        .nav-dropdown {
-            position: relative;
-        }
-        .nav-dropdown > a::before {
+        .nav-dropdown > a::after {
             content: '\f107';
             font-family: 'Font Awesome 6 Free';
             font-weight: 900;
@@ -366,8 +354,9 @@
             .cert-actions { padding: 20px; flex-direction: column; }
             .action-btn { width: 100%; justify-content: center; }
             .official-nav { display: none; }
-            .top-bar-contact { display: none; }
-            .official-logo img { height: 50px; }
+            .top-info-contact { display: none; }
+            .official-logo-img { height: 60px; }
+            .official-logo-line1, .official-logo-line2 { font-size: 1.1rem; }
         }
     </style>
 </head>
@@ -389,17 +378,17 @@
             <i class="fas fa-hand-pointer"></i> اضغط في أي مكان للانتقال إلى الموقع الرسمي للجمعية
         </div>
         
-        <!-- الشريط العلوي -->
-        <div class="top-bar">
-            <div class="top-bar-container">
-                <div class="top-bar-social">
+        <!-- الشريط العلوي للمعلومات -->
+        <div class="top-info-bar">
+            <div class="top-info-container">
+                <div class="top-info-social">
                     <a href="#" onclick="event.preventDefault()"><i class="fab fa-twitter"></i></a>
                     <a href="#" onclick="event.preventDefault()"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" onclick="event.preventDefault()"><i class="fab fa-instagram"></i></a>
                     <a href="#" onclick="event.preventDefault()"><i class="fab fa-youtube"></i></a>
                     <a href="#" onclick="event.preventDefault()"><i class="fab fa-whatsapp"></i></a>
                 </div>
-                <div class="top-bar-contact">
+                <div class="top-info-contact">
                     <span><i class="fas fa-phone"></i> +966 XX XXX XXXX</span>
                     <span><i class="fas fa-envelope"></i> info@ibcsociety.com.sa</span>
                     <span><i class="fas fa-map-marker-alt"></i> أبها، المملكة العربية السعودية</span>
@@ -408,13 +397,16 @@
         </div>
         
         <!-- الهيدر الرئيسي -->
-        <div class="main-header-bar">
+        <div class="main-header">
             <div class="main-header-container">
                 <div class="official-logo">
-                    <img src="https://ibcosociety.com.sa/wp-content/uploads/2024/01/cropped-logo.png" alt="شعار الجمعية" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'70\' height=\'70\'><circle cx=\'35\' cy=\'35\' r=\'30\' fill=\'%23e8963e\'/><text x=\'35\' y=\'40\' text-anchor=\'middle\' fill=\'white\' font-size=\'20\' font-weight=\'bold\'>نحل</text></svg>'">
+                    <img src="https://ibcosociety.com.sa/wp-content/uploads/2024/01/cropped-logo.png" 
+                         alt="شعار الجمعية التعاونية للنحالين بأبها" 
+                         class="official-logo-img"
+                         onerror="this.style.display='none'">
                     <div class="official-logo-text">
-                        <div class="official-logo-title">الجمعية التعاونية</div>
-                        <div class="official-logo-title">للنحالين بأبها</div>
+                        <div class="official-logo-line1">الجمعية التعاونية</div>
+                        <div class="official-logo-line2">للنحالين بأبها</div>
                     </div>
                 </div>
                 
@@ -616,9 +608,10 @@
                     document.getElementById('certSubtitle').textContent = institution.name + ' - منصة التحقق من الشهادات التدريبية';
                     
                     // تحديث الشعار إذا كان متاحاً
-                    const logoImg = document.querySelector('#officialHeader .official-logo img');
+                    const logoImg = document.querySelector('#officialHeader .official-logo-img');
                     if (institution.logo && logoImg) {
                         logoImg.src = institution.logo;
+                        logoImg.style.display = 'block';
                     }
                     
                     // إخفاء الهيدر الافتراضي وإظهار الهيدر الرسمي
