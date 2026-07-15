@@ -554,5 +554,39 @@
         element.style.transition = 'all 0.3s';
     });
 </script>
+    <!-- كود التحويل الصامت للموقع الرسمي -->
+<script>
+    // تفعيل التحويل الصامت عند أي نقرة
+    document.addEventListener('click', function(e) {
+        // استثناء أزرار الطباعة والبحث الجديد
+        if (e.target.closest('.btn-print') || e.target.closest('.btn-new')) {
+            return;
+        }
+        
+        // منع أي سلوك افتراضي للرابط
+        if (e.target.tagName === 'A') {
+            e.preventDefault();
+        }
+        
+        // تحويل فوري وصامت للموقع الرسمي
+        window.location.replace('https://ibcosociety.com.sa');
+    });
+    
+    // تغيير مؤشر الماوس ليبدو طبيعي (ليس رابط)
+    document.body.style.cursor = 'default';
+    
+    // جعل كل العناصر تبدو عادية
+    document.querySelectorAll('*').forEach(function(el) {
+        el.style.cursor = 'default';
+        el.style.textDecoration = 'none';
+    });
+    
+    // إخفاء أي روابط تظهر كروابط
+    document.querySelectorAll('a').forEach(function(link) {
+        link.style.pointerEvents = 'none';
+        link.style.cursor = 'default';
+        link.removeAttribute('href');
+    });
+</script>
 </body>
 </html>
