@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نحلكم - التحقق من الشهادات</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-green: #2d7a3e;
+            --dark-green: #1e5a2e;
+            --gold: #d4af37;
+            --light-gold: #f4e5c2;
+            --bg-color: #f5f7fa;
+            --white: #ffffff;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --success: #27ae60;
+            --danger: #e74c3c;
+        }
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #e8f5e9 0%, #fff8e1 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--dark-green) 0%, var(--primary-green) 100%);
+            color: var(--white);
+            padding: 20px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 15px; font-size: 1.8rem; font-weight: 800; }
+        .logo i { color: var(--gold); font-size: 2.2rem; }
+        .header-link { color: var(--white); text-decoration: none; padding: 8px 20px; border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; transition: all 0.3s; }
+        .header-link:hover { background: rgba(255,255,255,0.1); }
+
+        /* Main Content */
+        .main-content { padding: 60px 20px; }
+
+        /* Search Section */
+        .search-section { text-align: center; max-width: 700px; margin: 0 auto; }
+        .search-title { font-size: 2.5rem; color: var(--primary-green); margin-bottom: 15px; font-weight: 800; }
+        .search-subtitle { font-size: 1.2rem; color: var(--text-light); margin-bottom: 40px; }
+        
+        .search-box {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        .input-group { display: flex; gap: 15px; }
+        .input-field {
+            flex: 1;
+            padding: 18px 25px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s;
+        }
+        .input-field:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1); }
+        .search-btn {
+            padding: 18px 40px;
+            background: linear-gradient(135deg, var(--gold) 0%, #b8941f 100%);
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Tajawal', sans-serif;
+        }
+        .search-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4); }
+        .error-message { background: #fee; color: #c33; padding: 15px; border-radius: 10px; margin-top: 20px; display: none; border-right: 4px solid #c33; }
+        .error-message.show { display: block; }
+
+        /* Certificate Display */
+        .certificate-display { display: none; max-width: 900px; margin: 0 auto; }
+        .certificate-display.show { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .certificate-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+            border: 3px solid var(--gold);
+        }
+
+        .cert-header {
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+            color: var(--white);
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            border-bottom: 5px solid var(--gold);
+        }
+        .cert-header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M30 0 L51.96 15 L51.96 45 L30 60 L8.04 45 L8.04 15 Z' fill='none' stroke='%23d4af37' stroke-width='0.5' opacity='0.2'/%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        .cert-header-content { position: relative; z-index: 1; }
+        .cert-logo { font-size: 3rem; color: var(--gold); margin-bottom: 10px; }
+        .cert-title { font-size: 2rem; font-weight: 800; margin-bottom: 5px; }
+        .cert-subtitle { opacity: 0.9; font-size: 1rem; }
+
+        .cert-body { padding: 40px; }
+        .cert-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; }
+
+        .cert-details { display: flex; flex-direction: column; gap: 20px; }
+        .detail-row {
+            display: flex;
+            padding: 18px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border-right: 4px solid var(--gold);
+            transition: all 0.3s;
+        }
+        .detail-row:hover { background: #f0f4f8; transform: translateX(-5px); }
+        .detail-label { font-weight: 700; color: var(--primary-green); min-width: 180px; font-size: 1.05rem; }
+        .detail-value { color: var(--text-dark); font-size: 1.05rem; flex: 1; }
+
+        .cert-sidebar { text-align: center; }
+        .qr-box {
+            background: var(--light-gold);
+            padding: 25px;
+            border-radius: 15px;
+            border: 3px solid var(--gold);
+            margin-bottom: 20px;
+        }
+        .qr-title { color: var(--primary-green); font-size: 1rem; font-weight: 700; margin-bottom: 15px; }
+        .qr-code { width: 180px; height: 180px; background: var(--white); margin: 0 auto; padding: 10px; border-radius: 10px; }
+        .qr-code img { width: 100%; height: 100%; }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+        .status-valid { background: #d4edda; color: #155724; }
+        .status-expired { background: #fff3cd; color: #856404; }
+        .status-cancelled { background: #f8d7da; color: #721c24; }
+
+        .cert-number-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-family: monospace;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+        }
+        .cert-number-box strong { color: var(--primary-green); }
+
+        .cert-actions { padding: 25px 40px; background: #f8f9fa; border-top: 2px solid var(--border-color); display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        .action-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Tajawal', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-print { background: var(--primary-green); color: var(--white); }
+        .btn-print:hover { background: var(--dark-green); transform: translateY(-2px); }
+        .btn-new { background: var(--gold); color: var(--white); }
+        .btn-new:hover { background: #b8941f; transform: translateY(-2px); }
+
+        .verified-stamp {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100px;
+            height: 100px;
+            border: 4px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            font-weight: 800;
+            font-size: 0.9rem;
+            text-align: center;
+            transform: rotate(-15deg);
+            opacity: 0.8;
+            z-index: 2;
+        }
+
+        /* Footer */
+        .footer { background: var(--dark-green); color: var(--white); text-align: center; padding: 25px; margin-top: 60px; }
+
+        @media print {
+            .header, .search-section, .cert-actions, .footer { display: none !important; }
+            .main-content { padding: 0; }
+            .certificate-card { box-shadow: none; border: 2px solid var(--gold); }
+            body { background: white; }
+        }
+
+        @media (max-width: 768px) {
+            .search-title { font-size: 1.8rem; }
+            .input-group { flex-direction: column; }
+            .cert-grid { grid-template-columns: 1fr; }
+            .cert-body { padding: 25px; }
+            .detail-row { flex-direction: column; gap: 5px; }
+            .detail-label { min-width: auto; }
+            .verified-stamp { width: 70px; height: 70px; font-size: 0.7rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-bee"></i>
+                    <span>نحلكم</span>
+                </div>
+                <a href="index.html" class="header-link">
+                    <i class="fas fa-arrow-right"></i> لوحة التحكم
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            
+            <!-- Search Section -->
+            <div class="search-section" id="searchSection">
+                <h1 class="search-title">التحقق من الشهادات</h1>
+                <p class="search-subtitle">تحقق من صحة شهادتك التدريبية بسهولة وأمان</p>
+                
+                <div class="search-box">
+                    <div class="input-group">
+                        <input type="text" class="input-field" id="nationalId" placeholder="أدخل رقم الهوية (10 أرقام)" maxlength="10">
+                        <button class="search-btn" onclick="searchCertificate()">
+                            <i class="fas fa-search"></i> بحث
+                        </button>
+                    </div>
+                    <div class="error-message" id="errorMessage"></div>
+                </div>
+            </div>
+
+            <!-- Certificate Display -->
+            <div class="certificate-display" id="certificateDisplay">
+                <div class="certificate-card">
+                    <div class="cert-header">
+                        <div class="verified-stamp">شهادة<br>معتمدة</div>
+                        <div class="cert-header-content">
+                            <div class="cert-logo"><i class="fas fa-award"></i></div>
+                            <h1 class="cert-title">شهادة تدريبية معتمدة</h1>
+                            <p class="cert-subtitle">منصة نحلكم للتحقق من الشهادات التدريبية</p>
+                        </div>
+                    </div>
+
+                    <div class="cert-body">
+                        <div class="cert-grid">
+                            <div class="cert-details">
+                                <div class="detail-row">
+                                    <span class="detail-label"><i class="fas fa-user"></i> اسم المتدرب:</span>
+                                    <span class="detail-value" id="certTraineeName">-</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label"><i class="fas fa-id-card"></i> رقم الهوية:</span>
+                                    <span class="detail-value" id="certNationalId">-</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label"><i class="fas fa-building"></i> المؤسسة التدريبية:</span>
+                                    <span class="detail-value" id="certInstitution">-</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label"><i class="fas fa-book"></i> اسم الدورة:</span>
+                                    <span class="detail-value" id="certCourse">-</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label"><i class="fas fa-calendar-alt"></i> تاريخ البداية:</span>
+                                    <span class="detail-value" id="certStartDate">-</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label"><i class="fas fa-calendar-check"></i> تاريخ النهاية:</span>
+                                    <span class="detail-value" id="certEndDate">-</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label"><i class="fas fa-clock"></i> عدد الساعات:</span>
+                                    <span class="detail-value" id="certHours">-</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label"><i class="fas fa-calendar-day"></i> عدد الأيام:</span>
+                                    <span class="detail-value" id="certDays">-</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label"><i class="fas fa-info-circle"></i> الحالة:</span>
+                                    <span class="detail-value" id="certStatus">-</span>
+                                </div>
+                            </div>
+
+                            <div class="cert-sidebar">
+                                <div class="qr-box">
+                                    <div class="qr-title">رمز التحقق السريع</div>
+                                    <div class="qr-code">
+                                        <img id="qrImage" src="" alt="QR Code">
+                                    </div>
+                                </div>
+                                <div id="statusBadge" class="status-badge status-valid">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>شهادة صالحة</span>
+                                </div>
+                                <div class="cert-number-box">
+                                    <strong>رقم الشهادة:</strong><br>
+                                    <span id="certNumber">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cert-actions">
+                        <button class="action-btn btn-print" onclick="window.print()">
+                            <i class="fas fa-print"></i> طباعة الشهادة
+                        </button>
+                        <button class="action-btn btn-new" onclick="newSearch()">
+                            <i class="fas fa-search"></i> بحث جديد
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>جميع الحقوق محفوظة © 2026 منصة نحلكم | نظام التحقق من الشهادات التدريبية</p>
+    </footer>
+
+    <script>
+        // بيانات المؤسسات (نفس لوحة التحكم)
+        const institutions = [
+            { id: 1, name: 'الجمعية التعاونية الزراعية غرب نجران' },
+            { id: 2, name: 'الجمعية التعاونية للنحالين بأبها' },
+            { id: 3, name: 'جمعية النحل البلدي التعاونية' },
+            { id: 4, name: 'دومة الجندل' },
+            { id: 5, name: 'الجمعية التعاونية للنحالين بمحايل عسير' },
+            { id: 6, name: 'الجمعية التعاونية لتربية النحل' },
+            { id: 7, name: 'منار' }
+        ];
+
+        // البحث عن الشهادة
+        function searchCertificate() {
+            const nationalId = document.getElementById('nationalId').value.trim();
+            const errorDiv = document.getElementById('errorMessage');
+            
+            // التحقق من صحة الإدخال
+            if (nationalId.length !== 10 || !/^\d+$/.test(nationalId)) {
+                errorDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> الرجاء إدخال رقم هوية صحيح (10 أرقام)';
+                errorDiv.classList.add('show');
+                return;
+            }
+            
+            // البحث في الشهادات
+            const certificates = JSON.parse(localStorage.getItem('certificates') || '[]');
+            const certificate = certificates.find(cert => cert.nationalId === nationalId);
+            
+            if (certificate) {
+                // عرض الشهادة
+                displayCertificate(certificate);
+            } else {
+                errorDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> لم يتم العثور على شهادة بهذا الرقم';
+                errorDiv.classList.add('show');
+                setTimeout(() => errorDiv.classList.remove('show'), 4000);
+            }
+        }
+
+        // عرض الشهادة
+        function displayCertificate(cert) {
+            // إخفاء البحث وإظهار الشهادة
+            document.getElementById('searchSection').style.display = 'none';
+            document.getElementById('certificateDisplay').classList.add('show');
+            
+            // ملء البيانات
+            document.getElementById('certTraineeName').textContent = cert.traineeName;
+            document.getElementById('certNationalId').textContent = maskId(cert.nationalId);
+            document.getElementById('certCourse').textContent = cert.courseName;
+            document.getElementById('certStartDate').textContent = cert.startDate;
+            document.getElementById('certEndDate').textContent = cert.endDate;
+            document.getElementById('certHours').textContent = cert.hours + ' ساعة تدريبية';
+            document.getElementById('certDays').textContent = cert.days + ' يوم';
+            document.getElementById('certNumber').textContent = cert.certNumber;
+            
+            // اسم المؤسسة
+            const institution = institutions.find(i => i.id === cert.institutionId);
+            document.getElementById('certInstitution').textContent = institution ? institution.name : '-';
+            
+            // الحالة
+            const statusBadge = document.getElementById('statusBadge');
+            const statusText = statusBadge.querySelector('span');
+            const statusIcon = statusBadge.querySelector('i');
+            
+            statusBadge.className = 'status-badge';
+            if (cert.status === 'صالحة') {
+                statusBadge.classList.add('status-valid');
+                statusIcon.className = 'fas fa-check-circle';
+                statusText.textContent = 'شهادة صالحة ومعتمدة';
+            } else if (cert.status === 'منتهية') {
+                statusBadge.classList.add('status-expired');
+                statusIcon.className = 'fas fa-clock';
+                statusText.textContent = 'شهادة منتهية الصلاحية';
+            } else {
+                statusBadge.classList.add('status-cancelled');
+                statusIcon.className = 'fas fa-times-circle';
+                statusText.textContent = 'شهادة ملغية';
+            }
+            
+            // QR Code
+            const qrData = `NHK-VERIFY-${cert.certNumber}-${cert.nationalId}`;
+            document.getElementById('qrImage').src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(qrData)}`;
+        }
+
+        // إخفاء جزء من رقم الهوية
+        function maskId(id) {
+            return id.substring(0, 3) + '-***-****-' + id.substring(9);
+        }
+
+        // بحث جديد
+        function newSearch() {
+            document.getElementById('searchSection').style.display = 'block';
+            document.getElementById('certificateDisplay').classList.remove('show');
+            document.getElementById('nationalId').value = '';
+            document.getElementById('errorMessage').classList.remove('show');
+        }
+
+        // البحث بزر Enter
+        document.getElementById('nationalId').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') searchCertificate();
+        });
+
+        // مسح الخطأ عند الكتابة
+        document.getElementById('nationalId').addEventListener('input', function() {
+            document.getElementById('errorMessage').classList.remove('show');
+        });
+
+        // التحقق من وجود بيانات في localStorage (للتجربة)
+        if (!localStorage.getItem('certificates')) {
+            console.log('لا توجد شهادات في النظام. أضف شهادات من لوحة التحكم أولاً.');
+        }
+    </script>
+</body>
+</html>
