@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التحقق من الشهادة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-green: #2d7a3e;
+            --dark-green: #1e5a2e;
+            --gold: #d4af37;
+            --orange: #e8963e;
+            --white: #ffffff;
+            --text-dark: #2c3e50;
+        }
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+            cursor: default;
+        }
+
+        /* الهيدر الرسمي */
+        #officialHeader {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            cursor: pointer;
+        }
+        .top-info-bar {
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 10px 0;
+        }
+        .top-info-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #666;
+        }
+        .top-info-social { display: flex; gap: 12px; }
+        .top-info-social a { color: #666; font-size: 1rem; text-decoration: none; }
+        .top-info-contact { display: flex; gap: 20px; }
+        .top-info-contact span { display: flex; align-items: center; gap: 6px; }
+        .top-info-contact i { color: var(--orange); }
+        
+        .main-header { padding: 15px 0; }
+        .main-header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .official-logo { display: flex; align-items: center; gap: 15px; }
+        .official-logo-img { height: 80px; width: auto; }
+        .official-logo-text { display: flex; flex-direction: column; }
+        .official-logo-line1, .official-logo-line2 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--orange);
+            line-height: 1.3;
+        }
+        .official-nav { display: flex; gap: 25px; list-style: none; align-items: center; }
+        .official-nav a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+        .official-nav a:hover { color: var(--orange); }
+        
+        .header-hint {
+            background: linear-gradient(135deg, var(--orange) 0%, #d4852e 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* الشهادة */
+        .main-content { padding: 60px 20px; max-width: 1000px; margin: 0 auto; }
+        .certificate-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+            border: 4px solid var(--gold);
+        }
+        .cert-header {
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+            color: var(--white);
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            border-bottom: 6px solid var(--gold);
+        }
+        .cert-logo { font-size: 4rem; color: var(--gold); margin-bottom: 15px; }
+        .cert-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; }
+        .cert-subtitle { opacity: 0.95; font-size: 1.1rem; }
+        .verified-stamp {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            width: 120px;
+            height: 120px;
+            border: 5px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            font-weight: 800;
+            font-size: 1rem;
+            text-align: center;
+            transform: rotate(-15deg);
+            background: rgba(255,255,255,0.1);
+        }
+        .cert-body { padding: 50px; }
+        .cert-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; }
+        .cert-details { display: flex; flex-direction: column; gap: 20px; }
+        .detail-row {
+            display: flex;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border-right: 5px solid var(--gold);
+        }
+        .detail-label { 
+            font-weight: 700; 
+            color: var(--primary-green); 
+            min-width: 200px; 
+            font-size: 1.1rem; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+        }
+        .detail-value { color: var(--text-dark); font-size: 1.1rem; flex: 1; font-weight: 500; }
+        .cert-sidebar { text-align: center; }
+        .qr-box {
+            background: linear-gradient(135deg, #f4e5c2 0%, #fff 100%);
+            padding: 30px;
+            border-radius: 15px;
+            border: 4px solid var(--gold);
+            margin-bottom: 25px;
+        }
+        .qr-title { color: var(--primary-green); font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; }
+        .qr-code { width: 200px; height: 200px; background: var(--white); margin: 0 auto; padding: 15px; border-radius: 12px; }
+        .qr-code img { width: 100%; height: 100%; }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 35px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-top: 15px;
+        }
+        .status-valid { background: #d4edda; color: #155724; }
+        .status-expired { background: #fff3cd; color: #856404; }
+        .status-cancelled { background: #f8d7da; color: #721c24; }
+        .cert-number-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            font-family: 'Courier New', monospace;
+            border: 2px dashed var(--gold);
+        }
+        .cert-number-box strong { color: var(--primary-green); }
+        .cert-actions { 
+            padding: 30px 50px; 
+            background: #f8f9fa; 
+            border-top: 3px solid var(--gold); 
+            display: flex; 
+            gap: 20px; 
+            justify-content: center; 
+            flex-wrap: wrap; 
+        }
+        .action-btn {
+            padding: 15px 35px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-print { background: var(--primary-green); color: var(--white); }
+        .btn-back { background: var(--gold); color: var(--white); }
+
+        @media print {
+            #officialHeader, .cert-actions { display: none !important; }
+            body { background: white; }
+        }
+        @media (max-width: 768px) {
+            .cert-grid { grid-template-columns: 1fr; }
+            .detail-row { flex-direction: column; gap: 10px; }
+            .detail-label { min-width: auto; }
+            .official-nav { display: none; }
+            .top-info-contact { display: none; }
+            .cert-body { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الهيدر الرسمي -->
+    <header id="officialHeader">
+        <div class="header-hint">
+            <i class="fas fa-hand-pointer"></i> اضغط في أي مكان للانتقال إلى الموقع الرسمي
+        </div>
+        <div class="top-info-bar">
+            <div class="top-info-container">
+                <div class="top-info-social">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+                <div class="top-info-contact">
+                    <span><i class="fas fa-phone"></i> +966 XX XXX XXXX</span>
+                    <span><i class="fas fa-envelope"></i> info@society.com</span>
+                    <span><i class="fas fa-map-marker-alt"></i> المملكة العربية السعودية</span>
+                </div>
+            </div>
+        </div>
+        <div class="main-header">
+            <div class="main-header-container">
+                <div class="official-logo">
+                    <img src="" alt="شعار الجمعية" class="official-logo-img" id="logoImg">
+                    <div class="official-logo-text">
+                        <div class="official-logo-line1" id="instName1">الجمعية التعاونية</div>
+                        <div class="official-logo-line2" id="instName2">للنحالين</div>
+                    </div>
+                </div>
+                <ul class="official-nav">
+                    <li><a href="#">الرئيسية</a></li>
+                    <li><a href="#">من نحن</a></li>
+                    <li><a href="#">الجمعية العمومية</a></li>
+                    <li><a href="#">الإدارة</a></li>
+                    <li><a href="#">المركز الإعلامي</a></li>
+                    <li><a href="#">الحوكمة</a></li>
+                    <li><a href="#">اتصل بنا</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- الشهادة -->
+    <main class="main-content">
+        <div class="certificate-card">
+            <div class="cert-header">
+                <div class="verified-stamp">شهادة<br>معتمدة<br>رسمياً</div>
+                <div class="cert-logo"><i class="fas fa-award"></i></div>
+                <h1 class="cert-title">شهادة تدريبية معتمدة</h1>
+                <p class="cert-subtitle" id="certSubtitle">منصة التحقق من الشهادات التدريبية</p>
+            </div>
+
+            <div class="cert-body">
+                <div class="cert-grid">
+                    <div class="cert-details">
+                        <div class="detail-row">
+                            <span class="detail-label"><i class="fas fa-user"></i> اسم المتدرب:</span>
+                            <span class="detail-value" id="certTraineeName">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label"><i class="fas fa-id-card"></i> رقم الهوية:</span>
+                            <span class="detail-value" id="certNationalId">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label"><i class="fas fa-building"></i> المؤسسة التدريبية:</span>
+                            <span class="detail-value" id="certInstitution">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label"><i class="fas fa-book"></i> اسم الدورة:</span>
+                            <span class="detail-value" id="certCourse">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label"><i class="fas fa-calendar-alt"></i> تاريخ البداية:</span>
+                            <span class="detail-value" id="certStartDate">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label"><i class="fas fa-calendar-check"></i> تاريخ النهاية:</span>
+                            <span class="detail-value" id="certEndDate">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label"><i class="fas fa-clock"></i> عدد الساعات:</span>
+                            <span class="detail-value" id="certHours">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label"><i class="fas fa-calendar-day"></i> عدد الأيام:</span>
+                            <span class="detail-value" id="certDays">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label"><i class="fas fa-info-circle"></i> الحالة:</span>
+                            <span class="detail-value" id="certStatus">-</span>
+                        </div>
+                    </div>
+
+                    <div class="cert-sidebar">
+                        <div class="qr-box">
+                            <div class="qr-title"><i class="fas fa-qrcode"></i> رمز التحقق السريع</div>
+                            <div class="qr-code">
+                                <img id="qrImage" src="" alt="QR Code">
+                            </div>
+                        </div>
+                        <div id="statusBadge" class="status-badge status-valid">
+                            <i class="fas fa-check-circle"></i>
+                            <span>شهادة صالحة</span>
+                        </div>
+                        <div class="cert-number-box">
+                            <strong><i class="fas fa-hashtag"></i> رقم الشهادة:</strong><br>
+                            <span id="certNumber" style="font-size: 1.2rem; font-weight: 700; margin-top: 8px; display: block;">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cert-actions">
+                <button class="action-btn btn-print" onclick="window.print()">
+                    <i class="fas fa-print"></i> طباعة الشهادة
+                </button>
+                <button class="action-btn btn-back" onclick="window.history.back()">
+                    <i class="fas fa-arrow-right"></i> بحث جديد
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let realUrl = '';
+
+        // قراءة بيانات الشهادة من URL
+        function loadCertificate() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const data = urlParams.get('data');
+            
+            if (!data) {
+                document.body.innerHTML = '<div style="text-align:center; padding:50px;"><h1>لا توجد بيانات شهادة</h1></div>';
+                return;
+            }
+            
+            try {
+                const cert = JSON.parse(decodeURIComponent(escape(atob(data))));
+                realUrl = cert.realUrl || 'https://ibcosociety.com.sa';
+                
+                // ملء بيانات الشهادة
+                document.getElementById('certTraineeName').textContent = cert.traineeName;
+                document.getElementById('certNationalId').textContent = maskId(cert.nationalId);
+                document.getElementById('certCourse').textContent = cert.courseName;
+                document.getElementById('certStartDate').textContent = cert.startDate;
+                document.getElementById('certEndDate').textContent = cert.endDate;
+                document.getElementById('certHours').textContent = cert.hours + ' ساعة تدريبية';
+                document.getElementById('certDays').textContent = cert.days + ' يوم';
+                document.getElementById('certNumber').textContent = cert.certNumber;
+                document.getElementById('certInstitution').textContent = cert.institutionName;
+                document.getElementById('certSubtitle').textContent = cert.institutionName + ' - منصة التحقق من الشهادات';
+                
+                // تحديث اسم المؤسسة في الهيدر
+                const nameParts = cert.institutionName.split(' ');
+                if (nameParts.length >= 2) {
+                    document.getElementById('instName1').textContent = nameParts.slice(0, Math.ceil(nameParts.length/2)).join(' ');
+                    document.getElementById('instName2').textContent = nameParts.slice(Math.ceil(nameParts.length/2)).join(' ');
+                }
+                
+                // الحالة
+                const statusBadge = document.getElementById('statusBadge');
+                const statusText = statusBadge.querySelector('span');
+                const statusIcon = statusBadge.querySelector('i');
+                
+                statusBadge.className = 'status-badge';
+                if (cert.status === 'صالحة') {
+                    statusBadge.classList.add('status-valid');
+                    statusIcon.className = 'fas fa-check-circle';
+                    statusText.textContent = 'شهادة صالحة ومعتمدة';
+                } else if (cert.status === 'منتهية') {
+                    statusBadge.classList.add('status-expired');
+                    statusIcon.className = 'fas fa-clock';
+                    statusText.textContent = 'شهادة منتهية الصلاحية';
+                } else {
+                    statusBadge.classList.add('status-cancelled');
+                    statusIcon.className = 'fas fa-times-circle';
+                    statusText.textContent = 'شهادة ملغية';
+                }
+                
+                // QR Code
+                const qrData = 'NHK-VERIFY-' + cert.certNumber + '-' + cert.nationalId;
+                document.getElementById('qrImage').src = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(qrData);
+                
+                // تحديث العنوان
+                document.title = 'التحقق من الشهادة - ' + cert.institutionName;
+                
+            } catch (e) {
+                console.error('خطأ في قراءة البيانات:', e);
+                document.body.innerHTML = '<div style="text-align:center; padding:50px;"><h1>خطأ في بيانات الشهادة</h1></div>';
+            }
+        }
+
+        function maskId(id) {
+            return id.substring(0, 3) + '-***-****-' + id.substring(9);
+        }
+
+        // التحويل عند النقر على الهيدر
+        document.getElementById('officialHeader').addEventListener('click', function(e) {
+            e.preventDefault();
+            if (realUrl) {
+                window.location.href = realUrl;
+            }
+        });
+
+        // منع النقر على الروابط
+        document.querySelectorAll('#officialHeader a').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (realUrl) {
+                    window.location.href = realUrl;
+                }
+            });
+        });
+
+        // تحميل الشهادة عند فتح الصفحة
+        loadCertificate();
+    </script>
+</body>
+</html>
